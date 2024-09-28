@@ -7,12 +7,6 @@ public protocol ApiClientType {
         onSuccess: @escaping (_ data: T) -> Void,
         onError: @escaping (_ error: Error?) -> Void
     )
-
-    func loadImage(
-        from url: URL,
-        onSuccess: @escaping (_ image: UIImage?) -> Void,
-        onError: @escaping (_ error: Error) -> Void
-    )
 }
 
 public final class ApiClient: ApiClientType {
@@ -47,24 +41,6 @@ public final class ApiClient: ApiClientType {
         }
 
         task.resume()
-    }
-
-    public func loadImage(
-        from url: URL,
-        onSuccess: @escaping (UIImage?) -> Void,
-        onError: @escaping (any Error) -> Void
-    ) {
-        DispatchQueue.global(qos: .default).async {
-            do {
-                let data = try Data(contentsOf: url)
-                let image = UIImage(data: data)
-                DispatchQueue.main.async {
-                    onSuccess(image)
-                }
-            } catch {
-                onError(error)
-            }
-        }
     }
 }
 
