@@ -3,7 +3,6 @@ import RxSwift
 
 public protocol UseCaseType {
     func display(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult>
-    func display2(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult2>
 }
 
 public final class UseCase: UseCaseType {
@@ -15,8 +14,8 @@ public final class UseCase: UseCaseType {
         self.pokemonApiGateway = pokemonApiGateway
     }
 
-    public func display2(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult2> {
-        Observable<UseCaseModel.DisplayResult2>
+    public func display(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult> {
+        Observable<UseCaseModel.DisplayResult>
             .create { [pokemonApiGateway] observer in
                 pokemonApiGateway.getPokemonList(limit: limit, offset: offset)
                     .flatMap { pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)]> in
@@ -30,7 +29,7 @@ public final class UseCase: UseCaseType {
                         return Observable.zip(requests)
                     }
                     .map { results in
-                        results.compactMap { args -> UseCaseModel.DisplayResult2.Pokemon? in
+                        results.compactMap { args -> UseCaseModel.DisplayResult.Pokemon? in
                             let (species, pokemon) = args
                             guard let url = URL(string: pokemon.sprites.front_default ?? ""),
                                   let id = species.id,
@@ -47,63 +46,17 @@ public final class UseCase: UseCaseType {
             .startWith(.loading)
             .catchAndReturn(.showError)
     }
-
-    public func display(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult> {
-        Observable<UseCaseModel.DisplayResult>
-            .create { [pokemonApi] observer in
-                pokemonApi.getPokemon(
-                    name: "bulbasaur",
-//                pokemonApi.getPokemonSpecies(
-//                    name: "bulbasaur",
-//                pokemonApi.getPokemonList(
-//                    limit: limit,
-//                    offset: offset,
-                    onSuccess: { pokemonList in
-                        sleep(1)
-//                        let id = pokemonList.names
-//                        let flavorText = pokemonList.flavor_text_entries
-//                            .filter { $0.language.name == "ja" }
-//                            .first?
-//                            .flavor_text ?? ""
-
-                        observer.onNext(
-                            .loaded(
-                                pokemonList.sprites.front_default ?? ""
-//                                pokemonList.flavor_text_entries
-//                                    .filter { $0.language.name == "ja" }
-//                                    .compactMap { $0.flavor_text }.first ?? ""
-//                                pokemonList.results
-//                                    .compactMap { $0.name }
-//                                    .joined(separator: "\n")
-                            )
-                        )
-                    },
-                    onError: { error in
-                        observer.onError(error ?? NSError())
-                    }
-                )
-                return Disposables.create()
-            }
-            .startWith(.loading)
-            .catchAndReturn(.showError)
-    }
 }
 
 public enum UseCaseModel {
     public enum DisplayResult {
-        case loading
-        case loaded(String)
-        case showError
-    }
-
-    public enum DisplayResult2 {
         case loading
         case loaded([Pokemon])
         case showError
     }
 }
 
-extension UseCaseModel.DisplayResult2 {
+extension UseCaseModel.DisplayResult {
     public struct Pokemon: Equatable {
         public let id: Int
         public let name: String

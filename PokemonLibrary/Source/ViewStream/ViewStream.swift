@@ -16,7 +16,6 @@ public enum ViewStreamModel {
     public struct ViewStreamState {}
 
     public struct ViewStreamOutput {
-        let nameLabelText: Observable<String>
         let pokemonCards: Observable<[ViewDataModel.Item]>
     }
 }
@@ -35,21 +34,6 @@ public final class ViewStream: ViewStreamType {
         let output = input.viewDidLoad
             .flatMap { [useCase] _ in
                 return useCase.display(offset: 0, limit: 20)
-            }
-            .map { displayResult in
-                switch displayResult {
-                case .loading:
-                    return "loading"
-                case .loaded(let value):
-                    return value
-                case .showError:
-                    return "error"
-                }
-            }
-
-        let output2 = input.viewDidLoad
-            .flatMap { [useCase] _ in
-                return useCase.display2(offset: 0, limit: 20)
             }
             .map { result -> [ViewDataModel.Item] in
                 switch result {
@@ -75,8 +59,7 @@ public final class ViewStream: ViewStreamType {
             input: input,
             state: state,
             output: .init(
-                nameLabelText: output,
-                pokemonCards: output2
+                pokemonCards: output
             )
         )
     }

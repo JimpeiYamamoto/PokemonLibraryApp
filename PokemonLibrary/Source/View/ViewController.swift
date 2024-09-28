@@ -12,13 +12,6 @@ public final class ViewController: UIViewController {
         self.viewStream = viewStream
         super.init(nibName: nil, bundle: nil)
 
-        viewStream.output.nameLabelText
-            .observe(on: MainScheduler.instance)
-            .subscribe { [weak self] result in
-                self?.nameLabel.text = result
-            }
-            .disposed(by: disposeBag)
-
         viewStream.output.pokemonCards
             .subscribe { [weak self] result in
                 var snapshot = NSDiffableDataSourceSnapshot<ViewDataModel.Section, ViewDataModel.Item>()
@@ -33,16 +26,6 @@ public final class ViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
-        label.text = "empty"
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +81,6 @@ public final class ViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(nameLabel)
         view.addSubview(collectionView)
 
         NSLayoutConstraint.activate([
@@ -107,78 +89,9 @@ public final class ViewController: UIViewController {
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
-
-        NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            nameLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        ])
         viewStream.input.viewDidLoad.accept(())
 
         collectionView.dataSource = dataSource
-//        var snapshot = NSDiffableDataSourceSnapshot<ViewDataModel.Section, ViewDataModel.Item>()
-//        snapshot.appendSections([.identity])
-//        snapshot.appendItems(
-//            [
-//                .init(
-//                    offset: 0,
-//                    number: "1",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")!
-//                ),
-//                .init(
-//                    offset: 1,
-//                    number: "20",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
-//                ),
-//                .init(
-//                    offset: 2,
-//                    number: "1015",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
-//                ),
-//                .init(
-//                    offset: 3,
-//                    number: "1",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-//                ),
-//                .init(
-//                    offset: 4,
-//                    number: "1",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-//                ),
-//                .init(
-//                    offset: 5,
-//                    number: "1",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-//                ),
-//                .init(
-//                    offset: 6,
-//                    number: "1",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-//                ),
-//                .init(
-//                    offset: 7,
-//                    number: "1",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-//                ),
-//                .init(
-//                    offset: 8,
-//                    number: "1",
-//                    name: "フシギダネ",
-//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-//                ),
-//            ],
-//            toSection: .identity
-//        )
-//        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 
