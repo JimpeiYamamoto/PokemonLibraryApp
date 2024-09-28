@@ -42,7 +42,7 @@ public final class ViewController: UIViewController {
         return view
     }()
     
-    private lazy var dataSource = UICollectionViewDiffableDataSource<Section, Item>(
+    private lazy var dataSource = UICollectionViewDiffableDataSource<ViewDataModel.Section, ViewDataModel.Item>(
         collectionView: collectionView
     ) { collectionView, indexPath, itemIdentifier in
 
@@ -108,7 +108,7 @@ public final class ViewController: UIViewController {
         viewStream.input.viewDidLoad.accept(())
 
         collectionView.dataSource = dataSource
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        var snapshot = NSDiffableDataSourceSnapshot<ViewDataModel.Section, ViewDataModel.Item>()
         snapshot.appendSections([.identity])
         snapshot.appendItems(
             [
@@ -173,7 +173,7 @@ public final class ViewController: UIViewController {
     }
 }
 
-extension ViewController {
+public enum ViewDataModel {
     enum Section {
         case identity
     }
