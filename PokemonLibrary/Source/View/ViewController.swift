@@ -18,6 +18,15 @@ public final class ViewController: UIViewController {
                 self?.nameLabel.text = result
             }
             .disposed(by: disposeBag)
+
+        viewStream.output.pokemonCards
+            .subscribe { [weak self] result in
+                var snapshot = NSDiffableDataSourceSnapshot<ViewDataModel.Section, ViewDataModel.Item>()
+                snapshot.appendSections([.identity])
+                snapshot.appendItems(result, toSection: .identity)
+                self?.dataSource.apply(snapshot, animatingDifferences: false)
+            }
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -108,68 +117,68 @@ public final class ViewController: UIViewController {
         viewStream.input.viewDidLoad.accept(())
 
         collectionView.dataSource = dataSource
-        var snapshot = NSDiffableDataSourceSnapshot<ViewDataModel.Section, ViewDataModel.Item>()
-        snapshot.appendSections([.identity])
-        snapshot.appendItems(
-            [
-                .init(
-                    offset: 0,
-                    number: "1",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")!
-                ),
-                .init(
-                    offset: 1,
-                    number: "20",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
-                ),
-                .init(
-                    offset: 2,
-                    number: "1015",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
-                ),
-                .init(
-                    offset: 3,
-                    number: "1",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-                ),
-                .init(
-                    offset: 4,
-                    number: "1",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-                ),
-                .init(
-                    offset: 5,
-                    number: "1",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-                ),
-                .init(
-                    offset: 6,
-                    number: "1",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-                ),
-                .init(
-                    offset: 7,
-                    number: "1",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-                ),
-                .init(
-                    offset: 8,
-                    number: "1",
-                    name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
-                ),
-            ],
-            toSection: .identity
-        )
-        dataSource.apply(snapshot, animatingDifferences: false)
+//        var snapshot = NSDiffableDataSourceSnapshot<ViewDataModel.Section, ViewDataModel.Item>()
+//        snapshot.appendSections([.identity])
+//        snapshot.appendItems(
+//            [
+//                .init(
+//                    offset: 0,
+//                    number: "1",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")!
+//                ),
+//                .init(
+//                    offset: 1,
+//                    number: "20",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
+//                ),
+//                .init(
+//                    offset: 2,
+//                    number: "1015",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
+//                ),
+//                .init(
+//                    offset: 3,
+//                    number: "1",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+//                ),
+//                .init(
+//                    offset: 4,
+//                    number: "1",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+//                ),
+//                .init(
+//                    offset: 5,
+//                    number: "1",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+//                ),
+//                .init(
+//                    offset: 6,
+//                    number: "1",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+//                ),
+//                .init(
+//                    offset: 7,
+//                    number: "1",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+//                ),
+//                .init(
+//                    offset: 8,
+//                    number: "1",
+//                    name: "フシギダネ",
+//                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+//                ),
+//            ],
+//            toSection: .identity
+//        )
+//        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 
@@ -180,11 +189,11 @@ public enum ViewDataModel {
 
     struct Item: Hashable {
         private let offset: Int
-        let number: String
+        let number: Int
         let name: String
-        let imageUrl: URL
+        let imageUrl: URL?
 
-        public init(offset: Int, number: String, name: String, imageUrl: URL) {
+        public init(offset: Int, number: Int, name: String, imageUrl: URL?) {
             self.offset = offset
             self.number = number
             self.name = name

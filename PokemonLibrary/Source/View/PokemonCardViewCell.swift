@@ -61,8 +61,8 @@ public final class PokemonCardViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func configure(number: String, name: String, imageUrl: URL) {
-        numberLabel.text = number
+    public func configure(number: Int, name: String, imageUrl: URL?) {
+        numberLabel.text = "\(number)"
         nameLabel.text = name
 
         UIImage.loadImage(

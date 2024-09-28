@@ -17,6 +17,7 @@ public enum ViewStreamModel {
 
     public struct ViewStreamOutput {
         let nameLabelText: Observable<String>
+        let pokemonCards: Observable<[ViewDataModel.Item]>
     }
 }
 
@@ -26,7 +27,7 @@ public final class ViewStream: ViewStreamType {
     public let output: ViewStreamModel.ViewStreamOutput
 
     public convenience init() {
-        let useCase = UseCase(pokemonApi: PokemonApi(apiClient: ApiClient()))
+        let useCase = UseCase(pokemonApi: PokemonApi(apiClient: ApiClient()), pokemonApiGateway: PokemonApiGateway(pokemonApi: PokemonApi(apiClient: ApiClient())))
 
         let input = ViewStreamModel.ViewStreamInput()
         let state = ViewStreamModel.ViewStreamState()
@@ -46,11 +47,36 @@ public final class ViewStream: ViewStreamType {
                 }
             }
 
+        let output2 = input.viewDidLoad
+            .flatMap { [useCase] _ in
+                return useCase.display2(offset: 0, limit: 20)
+            }
+            .map { result -> [ViewDataModel.Item] in
+                switch result {
+                case .loading:
+                    return []
+                case .loaded(let pokemons):
+                    return pokemons
+                        .enumerated()
+                        .map { offset, pokemon -> ViewDataModel.Item in
+                            .init(
+                                offset: offset,
+                                number: pokemon.id,
+                                name: pokemon.name,
+                                imageUrl: pokemon.imageUrl
+                            )
+                        }
+                case .showError:
+                    return []
+                }
+            }
+
         self.init(
             input: input,
             state: state,
             output: .init(
-                nameLabelText: output
+                nameLabelText: output,
+                pokemonCards: output2
             )
         )
     }

@@ -25,6 +25,7 @@
 		F2B213F02CA80849000F78BB /* ViewStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213EF2CA80849000F78BB /* ViewStream.swift */; };
 		F2B213F22CA84F9D000F78BB /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F12CA84F9D000F78BB /* UIImageExtension.swift */; };
 		F2B213F42CA85205000F78BB /* PokemonCardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */; };
+		F2B213F72CA86F6A000F78BB /* PokemonApiGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F62CA86F6A000F78BB /* PokemonApiGateway.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		F2B213EF2CA80849000F78BB /* ViewStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStream.swift; sourceTree = "<group>"; };
 		F2B213F12CA84F9D000F78BB /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCardViewCell.swift; sourceTree = "<group>"; };
+		F2B213F62CA86F6A000F78BB /* PokemonApiGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApiGateway.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			children = (
 				F2B213E62CA7F1D3000F78BB /* Utils */,
 				F2B213E52CA7F1CC000F78BB /* Api */,
+				F2B213F52CA86F52000F78BB /* ApiGateway */,
 				F2B213EB2CA8077F000F78BB /* UseCase */,
 				F2B213EE2CA80839000F78BB /* ViewStream */,
 				F2B213E32CA7F1B7000F78BB /* View */,
@@ -212,6 +215,14 @@
 				F2B213EF2CA80849000F78BB /* ViewStream.swift */,
 			);
 			path = ViewStream;
+			sourceTree = "<group>";
+		};
+		F2B213F52CA86F52000F78BB /* ApiGateway */ = {
+			isa = PBXGroup;
+			children = (
+				F2B213F62CA86F6A000F78BB /* PokemonApiGateway.swift */,
+			);
+			path = ApiGateway;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,6 +368,7 @@
 				F2B213AB2CA7CA9C000F78BB /* ViewController.swift in Sources */,
 				F2B213ED2CA80819000F78BB /* useCase.swift in Sources */,
 				F2B213A72CA7CA9C000F78BB /* AppDelegate.swift in Sources */,
+				F2B213F72CA86F6A000F78BB /* PokemonApiGateway.swift in Sources */,
 				F2B213A92CA7CA9C000F78BB /* SceneDelegate.swift in Sources */,
 				F2B213F02CA80849000F78BB /* ViewStream.swift in Sources */,
 				F2B213EA2CA7F546000F78BB /* PokemonApi.swift in Sources */,
