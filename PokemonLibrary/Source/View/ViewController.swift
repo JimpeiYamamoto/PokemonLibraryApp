@@ -12,7 +12,7 @@ public final class ViewController: UIViewController {
         self.viewStream = viewStream
         super.init(nibName: nil, bundle: nil)
 
-        viewStream.output
+        viewStream.output.nameLabelText
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] result in
                 self?.nameLabel.text = result
@@ -45,6 +45,6 @@ public final class ViewController: UIViewController {
             nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             nameLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
-        viewStream.input.accept(())
+        viewStream.input.viewDidLoad.accept(())
     }
 }
