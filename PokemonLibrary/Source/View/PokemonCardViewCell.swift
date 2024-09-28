@@ -2,6 +2,8 @@ import Foundation
 import UIKit
 
 public final class PokemonCardViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "pokemonCardViewCell"
+
     private lazy var containerView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [headerView, spriteImageView])
         view.translatesAutoresizingMaskIntoConstraints = false
