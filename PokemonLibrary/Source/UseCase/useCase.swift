@@ -8,6 +8,7 @@ public protocol UseCaseType {
 public final class UseCase: UseCaseType {
     private let pokemonApi: PokemonApiType
     private let pokemonApiGateway: PokemonApiGatewayType
+    private let disposeBag = DisposeBag()
 
     public init(pokemonApi: PokemonApiType, pokemonApiGateway: PokemonApiGatewayType) {
         self.pokemonApi = pokemonApi
@@ -16,7 +17,7 @@ public final class UseCase: UseCaseType {
 
     public func display(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult> {
         Observable<UseCaseModel.DisplayResult>
-            .create { [pokemonApiGateway] observer in
+            .create { [disposeBag, pokemonApiGateway] observer in
                 pokemonApiGateway.getPokemonList(limit: limit, offset: offset)
                     .flatMap { pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)]> in
                         let requests = pokemonList.results.compactMap { result -> Observable<(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)>? in
@@ -41,6 +42,7 @@ public final class UseCase: UseCaseType {
                     .subscribe { result in
                         observer.onNext(.loaded(result))
                     }
+                    .disposed(by: disposeBag)
                 return Disposables.create()
             }
             .startWith(.loading)
