@@ -36,13 +36,12 @@ public final class ViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        view.collectionViewLayout = .init()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.register(PokemonCardViewCell.self, forCellWithReuseIdentifier: PokemonCardViewCell.reuseIdentifier)
         return view
     }()
-
+    
     private lazy var dataSource = UICollectionViewDiffableDataSource<Section, Item>(
         collectionView: collectionView
     ) { collectionView, indexPath, itemIdentifier in
@@ -52,7 +51,11 @@ public final class ViewController: UIViewController {
             for: indexPath
         ) as? PokemonCardViewCell
 
-        cell?.configure(number: itemIdentifier.number, name: itemIdentifier.name, imageUrl: itemIdentifier.imageUrl)
+        cell?.configure(
+            number: itemIdentifier.number,
+            name: itemIdentifier.name,
+            imageUrl: itemIdentifier.imageUrl
+        )
         return cell
     }
 
@@ -64,10 +67,10 @@ public final class ViewController: UIViewController {
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(
-            top: 2,
-            leading: 2,
-            bottom: 2,
-            trailing: 2
+            top: 1,
+            leading: 1,
+            bottom: 1,
+            trailing: 1
         )
 
         let groupSize = NSCollectionLayoutSize(
@@ -90,7 +93,7 @@ public final class ViewController: UIViewController {
         view.addSubview(collectionView)
 
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -104,20 +107,6 @@ public final class ViewController: UIViewController {
         ])
         viewStream.input.viewDidLoad.accept(())
 
-        let pokemonCardView = PokemonCardViewCell()
-        pokemonCardView.configure(
-            number: "1",
-            name: "フシギダネ",
-            imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
-        )
-        view.addSubview(pokemonCardView)
-        pokemonCardView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            pokemonCardView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 4),
-            pokemonCardView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
-            pokemonCardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
-        ])
-
         collectionView.dataSource = dataSource
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.identity])
@@ -127,17 +116,17 @@ public final class ViewController: UIViewController {
                     offset: 0,
                     number: "1",
                     name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
+                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")!
                 ),
                 .init(
                     offset: 1,
-                    number: "1",
+                    number: "20",
                     name: "フシギダネ",
                     imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
                 ),
                 .init(
                     offset: 2,
-                    number: "1",
+                    number: "1015",
                     name: "フシギダネ",
                     imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
                 ),
@@ -145,7 +134,37 @@ public final class ViewController: UIViewController {
                     offset: 3,
                     number: "1",
                     name: "フシギダネ",
-                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png")!
+                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+                ),
+                .init(
+                    offset: 4,
+                    number: "1",
+                    name: "フシギダネ",
+                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+                ),
+                .init(
+                    offset: 5,
+                    number: "1",
+                    name: "フシギダネ",
+                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+                ),
+                .init(
+                    offset: 6,
+                    number: "1",
+                    name: "フシギダネ",
+                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+                ),
+                .init(
+                    offset: 7,
+                    number: "1",
+                    name: "フシギダネ",
+                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
+                ),
+                .init(
+                    offset: 8,
+                    number: "1",
+                    name: "フシギダネ",
+                    imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png")!
                 ),
             ],
             toSection: .identity

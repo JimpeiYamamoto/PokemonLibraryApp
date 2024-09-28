@@ -4,46 +4,19 @@ import UIKit
 public final class PokemonCardViewCell: UICollectionViewCell {
     static let reuseIdentifier = "pokemonCardViewCell"
 
-    private lazy var containerView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [headerView, spriteImageView])
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.axis = .vertical
-        view.spacing = 4
-        view.distribution = .fill
-        view.alignment = .center
-        view.layer.cornerRadius = 8.0
-        view.layer.borderWidth = 2.0
-        view.layer.borderColor = UIColor.red.cgColor
-        return view
-    }()
-
-    private lazy var headerView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [numberLabel, nameLabel])
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.axis = .horizontal
-        view.spacing = 4
-        view.distribution = .fill
-        view.alignment = .center
-        return view
-    }()
-
     private let numberLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
-        label.backgroundColor = .red
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(equalToConstant: 40),
-            label.heightAnchor.constraint(equalToConstant: 40)
-        ])
         return label
     }()
 
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -58,31 +31,29 @@ public final class PokemonCardViewCell: UICollectionViewCell {
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
-        addSubview(containerView)
+        addSubview(numberLabel)
+        addSubview(nameLabel)
+        addSubview(spriteImageView)
+
+        layer.borderWidth = 3.0
+        layer.borderColor = UIColor.lightGray.cgColor
 
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
-            containerView.leftAnchor.constraint(equalTo: leftAnchor, constant: 4),
-            containerView.rightAnchor.constraint(equalTo: rightAnchor, constant: -4),
+            numberLabel.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            numberLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 4),
         ])
 
         NSLayoutConstraint.activate([
-            headerView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 4),
-            headerView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -4),
-            headerView.heightAnchor.constraint(equalToConstant: 40),
+            nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
+            nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 4),
+            nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -4),
         ])
 
         NSLayoutConstraint.activate([
-            numberLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 4),
-            numberLabel.heightAnchor.constraint(equalToConstant: 40),
-            numberLabel.widthAnchor.constraint(equalToConstant: 40),
-        ])
-
-        NSLayoutConstraint.activate([
-            spriteImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 4),
-            spriteImageView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -4),
-            spriteImageView.heightAnchor.constraint(equalTo: spriteImageView.widthAnchor),
+            spriteImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
+            spriteImageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+            spriteImageView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            spriteImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
     }
 
