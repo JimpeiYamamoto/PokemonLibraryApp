@@ -20,7 +20,7 @@
 		F2B213DC2CA7CB2E000F78BB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F2B213DB2CA7CB2E000F78BB /* RxSwift */; };
 		F2B213DF2CA7CB4A000F78BB /* PokemonAPI in Frameworks */ = {isa = PBXBuildFile; productRef = F2B213DE2CA7CB4A000F78BB /* PokemonAPI */; };
 		F2B213E82CA7F2D7000F78BB /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213E72CA7F2D7000F78BB /* ApiClient.swift */; };
-		F2B213EA2CA7F546000F78BB /* PokemonApiGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213E92CA7F546000F78BB /* PokemonApiGateway.swift */; };
+		F2B213EA2CA7F546000F78BB /* PokemonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213E92CA7F546000F78BB /* PokemonApi.swift */; };
 		F2B213ED2CA80819000F78BB /* useCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213EC2CA80819000F78BB /* useCase.swift */; };
 		F2B213F02CA80849000F78BB /* ViewStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213EF2CA80849000F78BB /* ViewStream.swift */; };
 /* End PBXBuildFile section */
@@ -56,7 +56,7 @@
 		F2B213C72CA7CA9D000F78BB /* PokemonLibraryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonLibraryUITests.swift; sourceTree = "<group>"; };
 		F2B213C92CA7CA9D000F78BB /* PokemonLibraryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonLibraryUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F2B213E72CA7F2D7000F78BB /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
-		F2B213E92CA7F546000F78BB /* PokemonApiGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApiGateway.swift; sourceTree = "<group>"; };
+		F2B213E92CA7F546000F78BB /* PokemonApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApi.swift; sourceTree = "<group>"; };
 		F2B213EC2CA80819000F78BB /* useCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = useCase.swift; sourceTree = "<group>"; };
 		F2B213EF2CA80849000F78BB /* ViewStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStream.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,7 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				F2B213E62CA7F1D3000F78BB /* Utils */,
-				F2B213E52CA7F1CC000F78BB /* ApiGateway */,
+				F2B213E52CA7F1CC000F78BB /* Api */,
 				F2B213EB2CA8077F000F78BB /* UseCase */,
 				F2B213EE2CA80839000F78BB /* ViewStream */,
 				F2B213E32CA7F1B7000F78BB /* View */,
@@ -176,12 +176,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		F2B213E52CA7F1CC000F78BB /* ApiGateway */ = {
+		F2B213E52CA7F1CC000F78BB /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				F2B213E92CA7F546000F78BB /* PokemonApiGateway.swift */,
+				F2B213E92CA7F546000F78BB /* PokemonApi.swift */,
 			);
-			path = ApiGateway;
+			path = Api;
 			sourceTree = "<group>";
 		};
 		F2B213E62CA7F1D3000F78BB /* Utils */ = {
@@ -353,7 +353,7 @@
 				F2B213A72CA7CA9C000F78BB /* AppDelegate.swift in Sources */,
 				F2B213A92CA7CA9C000F78BB /* SceneDelegate.swift in Sources */,
 				F2B213F02CA80849000F78BB /* ViewStream.swift in Sources */,
-				F2B213EA2CA7F546000F78BB /* PokemonApiGateway.swift in Sources */,
+				F2B213EA2CA7F546000F78BB /* PokemonApi.swift in Sources */,
 				F2B213E82CA7F2D7000F78BB /* ApiClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

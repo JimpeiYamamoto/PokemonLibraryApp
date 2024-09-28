@@ -6,25 +6,39 @@ public protocol UseCaseType {
 }
 
 public final class UseCase {
-    private let pokemonApiGateway: PokemonApiGatewayType
+    private let pokemonApi: PokemonApiType
 
-    public init(pokemonApiGateway: PokemonApiGatewayType) {
-        self.pokemonApiGateway = pokemonApiGateway
+    public init(pokemonApi: PokemonApiType) {
+        self.pokemonApi = pokemonApi
     }
 
     func display(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult> {
         Observable<UseCaseModel.DisplayResult>
-            .create { [weak self] observer in
-                self?.pokemonApiGateway.getPokemonList(
-                    limit: limit,
-                    offset: offset,
+            .create { [pokemonApi] observer in
+                pokemonApi.getPokemon(
+                    name: "bulbasaur",
+//                pokemonApi.getPokemonSpecies(
+//                    name: "bulbasaur",
+//                pokemonApi.getPokemonList(
+//                    limit: limit,
+//                    offset: offset,
                     onSuccess: { pokemonList in
                         sleep(1)
+//                        let id = pokemonList.names
+//                        let flavorText = pokemonList.flavor_text_entries
+//                            .filter { $0.language.name == "ja" }
+//                            .first?
+//                            .flavor_text ?? ""
+
                         observer.onNext(
                             .loaded(
-                                pokemonList.results
-                                    .compactMap { $0.name }
-                                    .joined(separator: "\n")
+                                pokemonList.sprites.front_default ?? ""
+//                                pokemonList.flavor_text_entries
+//                                    .filter { $0.language.name == "ja" }
+//                                    .compactMap { $0.flavor_text }.first ?? ""
+//                                pokemonList.results
+//                                    .compactMap { $0.name }
+//                                    .joined(separator: "\n")
                             )
                         )
                     },

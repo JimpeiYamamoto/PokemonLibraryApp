@@ -26,7 +26,7 @@ public final class ViewStream: ViewStreamType {
     public let output: ViewStreamModel.ViewStreamOutput
 
     public convenience init() {
-        let useCase = UseCase(pokemonApiGateway: PokemonApiGateway(apiClient: ApiClient()))
+        let useCase = UseCase(pokemonApi: PokemonApi(apiClient: ApiClient()))
 
         let input = ViewStreamModel.ViewStreamInput()
         let state = ViewStreamModel.ViewStreamState()

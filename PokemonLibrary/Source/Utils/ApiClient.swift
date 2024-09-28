@@ -24,6 +24,7 @@ public final class ApiClient: ApiClientType {
                   let _ = urlResponse as? HTTPURLResponse
             else {
                 onError(error)
+                print("error: ", error ?? "")
                 return
             }
 
@@ -33,6 +34,7 @@ public final class ApiClient: ApiClientType {
                 let decoded = try decoder.decode(T.self, from: data)
                 onSuccess(decoded)
             } catch {
+                print("error: ", error)
                 onError(error)
             }
         }
