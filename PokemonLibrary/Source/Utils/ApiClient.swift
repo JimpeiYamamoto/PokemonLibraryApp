@@ -15,6 +15,7 @@ public final class ApiClient: ApiClientType {
         onSuccess: @escaping (_ data: T) -> Void,
         onError: @escaping (_ error: Error?) -> Void
     ) {
+        print("URL:", url)
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")

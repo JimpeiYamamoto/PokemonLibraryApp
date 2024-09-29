@@ -35,7 +35,7 @@ public final class PokemonApi: PokemonApiType {
         onError: @escaping (Error?) -> Void
     ) {
         apiClient.request(
-            url: URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=\(limit)&?offset=\(offset)")!,
+            url: URL(string: "https://pokeapi.co/api/v2/pokemon?offset=\(offset)")!,
             onSuccess: onSuccess,
             onError: onError
         )
