@@ -26,11 +26,8 @@ public final class TopViewUseCase: TopViewUseCaseType {
                     return Observable.zip(species, pokemon)
                 }
                 return Observable.zip(requests)
-                    .catch { error in
-                        return .error(error)
-                    }
             }
-            .map { results in
+            .map { results -> [TopViewUseCaseModel.DisplayResult.Pokemon] in
                 results.compactMap { args -> TopViewUseCaseModel.DisplayResult.Pokemon? in
                     let (species, pokemon) = args
                     guard let url = URL(string: pokemon.sprites.front_default ?? ""),
@@ -41,7 +38,7 @@ public final class TopViewUseCase: TopViewUseCaseType {
                 }
             }
             .map { result -> TopViewUseCaseModel.DisplayResult in
-                    .loaded(result)
+                .loaded(result)
             }
             .startWith(.loading)
             .catchAndReturn(.showError)
