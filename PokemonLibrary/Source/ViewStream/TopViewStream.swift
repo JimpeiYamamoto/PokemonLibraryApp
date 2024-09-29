@@ -33,7 +33,7 @@ public final class ViewStream: TopViewStreamType {
 
         let output = input.viewDidLoad
             .flatMap { [useCase] _ in
-                return useCase.display(offset: 0, limit: 20)
+                return useCase.display(offset: 0, limit: 30)
             }
             .map { result -> [TopViewDataModel.Item] in
                 switch result {
