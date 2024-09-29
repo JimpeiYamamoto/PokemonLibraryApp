@@ -22,11 +22,7 @@ public final class TopViewUseCase: TopViewUseCaseType {
                     else { return Observable.just((nil, nil)) }
 
                     let species = me.pokemonApiGateway.getPokemonSpecies(name: name)
-                        .map(Optional.init)
-                        .catchAndReturn(nil)
                     let pokemon = me.pokemonApiGateway.getPokemon(name: name)
-                        .map(Optional.init)
-                        .catchAndReturn(nil)
                     return Observable.zip(species, pokemon)
                 }
                 return Observable.zip(requests)

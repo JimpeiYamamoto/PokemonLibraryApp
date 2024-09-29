@@ -3,8 +3,8 @@ import RxSwift
 
 public protocol PokemonApiGatewayType {
     func getPokemonList(offset: Int) -> Observable<PokemonApiModel.PokemonList>
-    func getPokemonSpecies(name: String) -> Observable<PokemonApiModel.PokemonSpecies>
-    func getPokemon(name: String) -> Observable<PokemonApiModel.Pokemon>
+    func getPokemonSpecies(name: String) -> Observable<PokemonApiModel.PokemonSpecies?>
+    func getPokemon(name: String) -> Observable<PokemonApiModel.Pokemon?>
 }
 
 public final class PokemonApiGateway: PokemonApiGatewayType {
@@ -29,30 +29,30 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
         }
     }
 
-    public func getPokemonSpecies(name: String) -> Observable<PokemonApiModel.PokemonSpecies> {
-        Observable<PokemonApiModel.PokemonSpecies>.create { [pokemonApi] observer in
+    public func getPokemonSpecies(name: String) -> Observable<PokemonApiModel.PokemonSpecies?> {
+        Observable<PokemonApiModel.PokemonSpecies?>.create { [pokemonApi] observer in
             pokemonApi.getPokemonSpecies(
                 name: name,
                 onSuccess: { species in
                     observer.onNext(species)
                 },
                 onError: { error in
-                    observer.onError(error ?? NSError())
+                    observer.onNext(nil)
                 }
             )
             return Disposables.create()
         }
     }
 
-    public func getPokemon(name: String) -> Observable<PokemonApiModel.Pokemon> {
-        Observable<PokemonApiModel.Pokemon>.create { [pokemonApi] observer in
+    public func getPokemon(name: String) -> Observable<PokemonApiModel.Pokemon?> {
+        Observable<PokemonApiModel.Pokemon?>.create { [pokemonApi] observer in
             pokemonApi.getPokemon(
                 name: name,
                 onSuccess: { pokemon in
                     observer.onNext(pokemon)
                 },
                 onError: { error in
-                    observer.onError(error ?? NSError())
+                    observer.onNext(nil)
                 }
             )
             return Disposables.create()
