@@ -16,7 +16,7 @@ public enum ViewStreamModel {
     public struct ViewStreamState {}
 
     public struct ViewStreamOutput {
-        let pokemonCards: Observable<[ViewDataModel.Item]>
+        let pokemonCards: Observable<[TopViewDataModel.Item]>
     }
 }
 
@@ -35,14 +35,14 @@ public final class ViewStream: ViewStreamType {
             .flatMap { [useCase] _ in
                 return useCase.display(offset: 0, limit: 20)
             }
-            .map { result -> [ViewDataModel.Item] in
+            .map { result -> [TopViewDataModel.Item] in
                 switch result {
                 case .loading:
                     return []
                 case .loaded(let pokemons):
                     return pokemons
                         .enumerated()
-                        .map { offset, pokemon -> ViewDataModel.Item in
+                        .map { offset, pokemon -> TopViewDataModel.Item in
                             .init(
                                 offset: offset,
                                 number: pokemon.id,

@@ -3,7 +3,7 @@ import PokemonAPI
 import RxSwift
 import RxRelay
 
-public final class ViewController: UIViewController {
+public final class TopViewController: UIViewController {
 
     let viewStream: ViewStream
     let disposeBag = DisposeBag()
@@ -15,7 +15,7 @@ public final class ViewController: UIViewController {
         viewStream.output.pokemonCards
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] result in
-                var snapshot = NSDiffableDataSourceSnapshot<ViewDataModel.Section, ViewDataModel.Item>()
+                var snapshot = NSDiffableDataSourceSnapshot<TopViewDataModel.Section, TopViewDataModel.Item>()
                 snapshot.appendSections([.identity])
                 snapshot.appendItems(result, toSection: .identity)
                 self?.dataSource.apply(snapshot, animatingDifferences: false)
@@ -35,7 +35,7 @@ public final class ViewController: UIViewController {
         return view
     }()
     
-    private lazy var dataSource = UICollectionViewDiffableDataSource<ViewDataModel.Section, ViewDataModel.Item>(
+    private lazy var dataSource = UICollectionViewDiffableDataSource<TopViewDataModel.Section, TopViewDataModel.Item>(
         collectionView: collectionView
     ) { collectionView, indexPath, itemIdentifier in
 
@@ -96,7 +96,7 @@ public final class ViewController: UIViewController {
     }
 }
 
-public enum ViewDataModel {
+public enum TopViewDataModel {
     enum Section {
         case identity
     }
