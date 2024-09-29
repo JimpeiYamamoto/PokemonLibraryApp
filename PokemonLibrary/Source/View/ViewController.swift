@@ -13,6 +13,7 @@ public final class ViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         viewStream.output.pokemonCards
+            .observe(on: MainScheduler.instance)
             .subscribe { [weak self] result in
                 var snapshot = NSDiffableDataSourceSnapshot<ViewDataModel.Section, ViewDataModel.Item>()
                 snapshot.appendSections([.identity])

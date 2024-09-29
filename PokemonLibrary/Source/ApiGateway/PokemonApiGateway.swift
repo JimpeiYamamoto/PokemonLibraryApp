@@ -60,3 +60,7 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
         }
     }
 }
+
+extension PokemonApiGateway {
+    public static let shared = PokemonApiGateway(pokemonApi: PokemonApi.shared)
+}

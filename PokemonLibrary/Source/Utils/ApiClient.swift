@@ -44,3 +44,6 @@ public final class ApiClient: ApiClientType {
     }
 }
 
+extension ApiClient {
+    public static let shared = ApiClient()
+}

@@ -6,12 +6,10 @@ public protocol UseCaseType {
 }
 
 public final class UseCase: UseCaseType {
-    private let pokemonApi: PokemonApiType
     private let pokemonApiGateway: PokemonApiGatewayType
     private let disposeBag = DisposeBag()
 
-    public init(pokemonApi: PokemonApiType, pokemonApiGateway: PokemonApiGatewayType) {
-        self.pokemonApi = pokemonApi
+    public init(pokemonApiGateway: PokemonApiGatewayType) {
         self.pokemonApiGateway = pokemonApiGateway
     }
 
@@ -74,4 +72,8 @@ extension UseCaseModel.DisplayResult {
             self.imageUrl = imageUrl
         }
     }
+}
+
+extension UseCase {
+    public static let shared = UseCase(pokemonApiGateway: PokemonApiGateway.shared)
 }

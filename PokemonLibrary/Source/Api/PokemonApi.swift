@@ -110,3 +110,7 @@ public enum PokemonApiModel {
         let url: String?
     }
 }
+
+extension PokemonApi {
+    public static let shared = PokemonApi(apiClient: ApiClient.shared)
+}

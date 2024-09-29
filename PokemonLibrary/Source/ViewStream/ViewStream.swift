@@ -25,9 +25,9 @@ public final class ViewStream: ViewStreamType {
     public let state: ViewStreamModel.ViewStreamState
     public let output: ViewStreamModel.ViewStreamOutput
 
-    public convenience init() {
-        let useCase = UseCase(pokemonApi: PokemonApi(apiClient: ApiClient()), pokemonApiGateway: PokemonApiGateway(pokemonApi: PokemonApi(apiClient: ApiClient())))
+    private let useCase: UseCaseType
 
+    public convenience init(useCase: UseCaseType) {
         let input = ViewStreamModel.ViewStreamInput()
         let state = ViewStreamModel.ViewStreamState()
 
@@ -60,18 +60,21 @@ public final class ViewStream: ViewStreamType {
             state: state,
             output: .init(
                 pokemonCards: output
-            )
+            ),
+            useCase: useCase
         )
     }
 
     public init(
         input: ViewStreamModel.ViewStreamInput,
         state: ViewStreamModel.ViewStreamState,
-        output: ViewStreamModel.ViewStreamOutput
+        output: ViewStreamModel.ViewStreamOutput,
+        useCase: UseCaseType
     ) {
         self.input = input
         self.state = state
         self.output = output
+        self.useCase = useCase
     }
 }
 
