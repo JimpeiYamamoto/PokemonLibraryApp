@@ -2,6 +2,7 @@ import UIKit
 import PokemonAPI
 import RxSwift
 import RxRelay
+import RxCocoa
 
 public final class TopViewController: UIViewController {
 
@@ -16,6 +17,7 @@ public final class TopViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] result in
                 var snapshot = NSDiffableDataSourceSnapshot<TopViewDataModel.Section, TopViewDataModel.Item>()
+                snapshot.deleteAllItems()
                 snapshot.appendSections([.identity])
                 snapshot.appendItems(result, toSection: .identity)
                 self?.dataSource.apply(snapshot, animatingDifferences: false)
@@ -26,6 +28,18 @@ public final class TopViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] isHidden in
                 self?.loadingView.isHidden = isHidden
+            }
+            .disposed(by: disposeBag)
+
+        collectionView.rx.contentOffset
+            .subscribe { [collectionView] contentOffset in
+                let offsetY = contentOffset.y
+                let contentHeight = collectionView.contentSize.height
+                let boundsHeight = collectionView.bounds.size.height
+                let isBottom = offsetY + boundsHeight >= contentHeight - (boundsHeight * 0.05)
+                if isBottom {
+                    viewStream.input.scrollToBottom.accept(())
+                }
             }
             .disposed(by: disposeBag)
     }

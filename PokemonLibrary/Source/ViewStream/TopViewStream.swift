@@ -11,9 +11,12 @@ public protocol TopViewStreamType {
 public enum TopViewStreamModel {
     public struct ViewStreamInput {
         public let viewDidLoad: PublishRelay<Void> = .init()
+        public let scrollToBottom: PublishRelay<Void> = .init()
     }
 
-    public struct ViewStreamState {}
+    public struct ViewStreamState {
+        let pokemonCards = BehaviorRelay<[TopViewDataModel.Item]>(value: [])
+    }
 
     public struct ViewStreamOutput {
         let pokemonCards: Observable<[TopViewDataModel.Item]>
@@ -32,9 +35,15 @@ public final class ViewStream: TopViewStreamType {
         let input = TopViewStreamModel.ViewStreamInput()
         let state = TopViewStreamModel.ViewStreamState()
 
-        let displayResult = input.viewDidLoad
+        let displayResult = Observable
+            .merge(
+                input.viewDidLoad.asObservable(),
+                input.scrollToBottom.asObservable()
+            )
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .flatMap { [useCase] _ in
-                return useCase.display(offset: 0, limit: 30)
+                let offset = state.pokemonCards.value.count
+                return useCase.display(offset: offset, limit: 30)
             }
 
         let pokemonCards = displayResult
@@ -44,12 +53,16 @@ public final class ViewStream: TopViewStreamType {
                     .enumerated()
                     .map { offset, pokemon -> TopViewDataModel.Item in
                         .init(
-                            offset: offset,
+                            offset: offset + state.pokemonCards.value.count,
                             number: pokemon.id,
                             name: pokemon.name,
                             imageUrl: pokemon.imageUrl
                         )
                     }
+            }
+            .do { state.pokemonCards.accept(state.pokemonCards.value + $0) }
+            .map { items in
+                state.pokemonCards.value
             }
 
         let isLoadingViewHidden = displayResult
