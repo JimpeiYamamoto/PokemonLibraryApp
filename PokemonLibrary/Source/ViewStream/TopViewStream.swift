@@ -46,7 +46,8 @@ public final class ViewStream: TopViewStreamType {
                 return useCase.display(offset: offset)
             }
 
-        let pokemonCards = displayResult
+        _ = displayResult
+            .debug("displayResult", trimOutput: true)
             .map { displayResult -> [TopViewDataModel.Item] in
                 guard case let .loaded(pokemons) = displayResult else { return [] }
                 return pokemons
@@ -60,10 +61,10 @@ public final class ViewStream: TopViewStreamType {
                         )
                     }
             }
-            .do { state.pokemonCards.accept(state.pokemonCards.value + $0) }
             .map { items in
-                state.pokemonCards.value
+                state.pokemonCards.value + items
             }
+            .bind(to: state.pokemonCards)
 
         let isLoadingViewHidden = displayResult
             .map { $0 != .loading }
@@ -72,7 +73,7 @@ public final class ViewStream: TopViewStreamType {
             input: input,
             state: state,
             output: .init(
-                pokemonCards: pokemonCards,
+                pokemonCards: state.pokemonCards.asObservable(),
                 isLoadingViewHidden: isLoadingViewHidden
             ),
             useCase: useCase

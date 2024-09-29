@@ -14,34 +14,34 @@ public final class TopViewUseCase: TopViewUseCaseType {
     }
 
     public func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
-        Observable<TopViewUseCaseModel.DisplayResult>
-            .create { [disposeBag, pokemonApiGateway] observer in
-                pokemonApiGateway.getPokemonList(offset: offset)
-                    .flatMap { pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)]> in
-                        let requests = pokemonList.results.compactMap { result -> Observable<(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)>? in
-                            guard let name = result.name else { return nil }
+        pokemonApiGateway.getPokemonList(offset: offset)
+            .flatMap { [weak self] pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)]> in
+                let requests = pokemonList.results.compactMap { result -> Observable<(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)>? in
+                    guard let name = result.name,
+                          let me = self
+                    else { return nil }
 
-                            let species = pokemonApiGateway.getPokemonSpecies(name: name)
-                            let pokemon = pokemonApiGateway.getPokemon(name: name)
-                            return Observable.zip(species, pokemon)
-                        }
-                        return Observable.zip(requests)
+                    let species = me.pokemonApiGateway.getPokemonSpecies(name: name)
+                    let pokemon = me.pokemonApiGateway.getPokemon(name: name)
+                    return Observable.zip(species, pokemon)
+                }
+                return Observable.zip(requests)
+                    .catch { error in
+                        return .error(error)
                     }
-                    .map { results in
-                        results.compactMap { args -> TopViewUseCaseModel.DisplayResult.Pokemon? in
-                            let (species, pokemon) = args
-                            guard let url = URL(string: pokemon.sprites.front_default ?? ""),
-                                  let id = species.id,
-                                  let name = species.names.filter({ $0.language.name == "ja" }).first?.name
-                            else { return nil }
-                            return .init(id: id, name: name, imageUrl: url)
-                        }
-                    }
-                    .subscribe { result in
-                        observer.onNext(.loaded(result))
-                    }
-                    .disposed(by: disposeBag)
-                return Disposables.create()
+            }
+            .map { results in
+                results.compactMap { args -> TopViewUseCaseModel.DisplayResult.Pokemon? in
+                    let (species, pokemon) = args
+                    guard let url = URL(string: pokemon.sprites.front_default ?? ""),
+                          let id = species.id,
+                          let name = species.names.filter({ $0.language.name == "ja" }).first?.name
+                    else { return nil }
+                    return .init(id: id, name: name, imageUrl: url)
+                }
+            }
+            .map { result -> TopViewUseCaseModel.DisplayResult in
+                    .loaded(result)
             }
             .startWith(.loading)
             .catchAndReturn(.showError)
