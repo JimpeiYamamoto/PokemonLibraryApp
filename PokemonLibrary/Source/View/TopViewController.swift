@@ -26,7 +26,13 @@ public final class TopViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    private let loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -82,17 +88,25 @@ public final class TopViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(collectionView)
 
+        view.addSubview(collectionView)
+        collectionView.dataSource = dataSource
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
-        viewStream.input.viewDidLoad.accept(())
 
-        collectionView.dataSource = dataSource
+        view.addSubview(loadingView)
+        NSLayoutConstraint.activate([
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 100),
+            loadingView.widthAnchor.constraint(equalToConstant: 100),
+        ])
+
+        viewStream.input.viewDidLoad.accept(())
     }
 }
 
