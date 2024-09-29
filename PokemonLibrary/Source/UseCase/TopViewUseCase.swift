@@ -15,14 +15,18 @@ public final class TopViewUseCase: TopViewUseCaseType {
 
     public func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
         pokemonApiGateway.getPokemonList(offset: offset)
-            .flatMap { [weak self] pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)]> in
-                let requests = pokemonList.results.compactMap { result -> Observable<(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)>? in
+            .flatMap { [weak self] pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies?, PokemonApiModel.Pokemon?)]> in
+                let requests = pokemonList.results.map { result -> Observable<(PokemonApiModel.PokemonSpecies?, PokemonApiModel.Pokemon?)> in
                     guard let name = result.name,
                           let me = self
-                    else { return nil }
+                    else { return Observable.just((nil, nil)) }
 
                     let species = me.pokemonApiGateway.getPokemonSpecies(name: name)
+                        .map(Optional.init)
+                        .catchAndReturn(nil)
                     let pokemon = me.pokemonApiGateway.getPokemon(name: name)
+                        .map(Optional.init)
+                        .catchAndReturn(nil)
                     return Observable.zip(species, pokemon)
                 }
                 return Observable.zip(requests)
@@ -30,7 +34,9 @@ public final class TopViewUseCase: TopViewUseCaseType {
             .map { results -> [TopViewUseCaseModel.DisplayResult.Pokemon] in
                 results.compactMap { args -> TopViewUseCaseModel.DisplayResult.Pokemon? in
                     let (species, pokemon) = args
-                    guard let url = URL(string: pokemon.sprites.front_default ?? ""),
+                    guard let species = species,
+                          let pokemon = pokemon,
+                          let url = URL(string: pokemon.sprites.front_default ?? ""),
                           let id = species.id,
                           let name = species.names.filter({ $0.language.name == "ja" }).first?.name
                     else { return nil }
@@ -41,7 +47,6 @@ public final class TopViewUseCase: TopViewUseCaseType {
                 .loaded(result)
             }
             .startWith(.loading)
-            .catchAndReturn(.showError)
     }
 }
 
