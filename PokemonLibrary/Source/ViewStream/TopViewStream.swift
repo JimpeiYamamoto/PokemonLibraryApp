@@ -43,7 +43,7 @@ public final class ViewStream: TopViewStreamType {
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .flatMap { [useCase] _ in
                 let offset = state.pokemonCards.value.count
-                return useCase.display(offset: offset, limit: 30)
+                return useCase.display(offset: offset)
             }
 
         let pokemonCards = displayResult

@@ -2,7 +2,6 @@ import Foundation
 
 public protocol PokemonApiType {
     func getPokemonList(
-        limit: Int,
         offset: Int,
         onSuccess: @escaping (PokemonApiModel.PokemonList) -> Void,
         onError: @escaping (Error?) -> Void
@@ -29,7 +28,6 @@ public final class PokemonApi: PokemonApiType {
     }
 
     public func getPokemonList(
-        limit: Int,
         offset: Int,
         onSuccess: @escaping (PokemonApiModel.PokemonList) -> Void,
         onError: @escaping (Error?) -> Void

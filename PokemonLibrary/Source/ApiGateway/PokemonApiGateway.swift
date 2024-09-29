@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 
 public protocol PokemonApiGatewayType {
-    func getPokemonList(limit: Int, offset: Int) -> Observable<PokemonApiModel.PokemonList>
+    func getPokemonList(offset: Int) -> Observable<PokemonApiModel.PokemonList>
     func getPokemonSpecies(name: String) -> Observable<PokemonApiModel.PokemonSpecies>
     func getPokemon(name: String) -> Observable<PokemonApiModel.Pokemon>
 }
@@ -14,10 +14,9 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
         self.pokemonApi = pokemonApi
     }
 
-    public func getPokemonList(limit: Int, offset: Int) -> Observable<PokemonApiModel.PokemonList> {
+    public func getPokemonList(offset: Int) -> Observable<PokemonApiModel.PokemonList> {
         Observable<PokemonApiModel.PokemonList>.create { [pokemonApi] observer in
             pokemonApi.getPokemonList(
-                limit: limit,
                 offset: offset,
                 onSuccess: { pokemonList in
                     observer.onNext(pokemonList)

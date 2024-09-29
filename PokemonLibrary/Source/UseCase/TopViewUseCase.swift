@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 
 public protocol TopViewUseCaseType {
-    func display(offset: Int, limit: Int) -> Observable<TopViewUseCaseModel.DisplayResult>
+    func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult>
 }
 
 public final class TopViewUseCase: TopViewUseCaseType {
@@ -13,10 +13,10 @@ public final class TopViewUseCase: TopViewUseCaseType {
         self.pokemonApiGateway = pokemonApiGateway
     }
 
-    public func display(offset: Int, limit: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
+    public func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
         Observable<TopViewUseCaseModel.DisplayResult>
             .create { [disposeBag, pokemonApiGateway] observer in
-                pokemonApiGateway.getPokemonList(limit: limit, offset: offset)
+                pokemonApiGateway.getPokemonList(offset: offset)
                     .flatMap { pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)]> in
                         let requests = pokemonList.results.compactMap { result -> Observable<(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)>? in
                             guard let name = result.name else { return nil }
