@@ -13,6 +13,7 @@ public final class LoadingView: UIView {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         addSubview(activityIndicator)
         backgroundColor = UIColor(white: 1, alpha: 0.7)
         NSLayoutConstraint.activate([

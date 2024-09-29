@@ -31,6 +31,7 @@ public final class PokemonCardViewCell: UICollectionViewCell {
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
+        backgroundColor = .white
         addSubview(numberLabel)
         addSubview(nameLabel)
         addSubview(spriteImageView)

@@ -56,6 +56,7 @@ public final class TopViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.register(PokemonCardViewCell.self, forCellWithReuseIdentifier: PokemonCardViewCell.reuseIdentifier)
