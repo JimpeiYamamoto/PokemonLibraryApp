@@ -36,7 +36,7 @@ public final class TopViewController: UIViewController {
                 let offsetY = contentOffset.y
                 let contentHeight = collectionView.contentSize.height
                 let boundsHeight = collectionView.bounds.size.height
-                let isBottom = offsetY + boundsHeight >= contentHeight - (boundsHeight * 0.05)
+                let isBottom = offsetY + boundsHeight >= contentHeight
                 if isBottom {
                     viewStream.input.scrollToBottom.accept(())
                 }
