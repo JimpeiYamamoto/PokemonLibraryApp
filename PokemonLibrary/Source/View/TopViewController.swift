@@ -1,5 +1,4 @@
 import UIKit
-import PokemonAPI
 import RxSwift
 import RxRelay
 import RxCocoa

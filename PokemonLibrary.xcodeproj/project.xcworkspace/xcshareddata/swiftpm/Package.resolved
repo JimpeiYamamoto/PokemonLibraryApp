@@ -1,15 +1,6 @@
 {
-  "originHash" : "965db93daab15393d06e40039e22f44a117c3aa114d43f0232c79ab8372a496b",
+  "originHash" : "17ad69a9d62bb5214561f4b13adc77420e1190aa388f7c14a5057af4cc73b509",
   "pins" : [
-    {
-      "identity" : "pokemonapi",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kinkofer/PokemonAPI",
-      "state" : {
-        "revision" : "dfb4cfbf5f91798a5c37b031b913e21a74a06289",
-        "version" : "6.1.1"
-      }
-    },
     {
       "identity" : "rxswift",
       "kind" : "remoteSourceControl",

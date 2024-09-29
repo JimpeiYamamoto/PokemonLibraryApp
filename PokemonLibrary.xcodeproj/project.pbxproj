@@ -18,7 +18,6 @@
 		F2B213D82CA7CB2E000F78BB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = F2B213D72CA7CB2E000F78BB /* RxCocoa */; };
 		F2B213DA2CA7CB2E000F78BB /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = F2B213D92CA7CB2E000F78BB /* RxRelay */; };
 		F2B213DC2CA7CB2E000F78BB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F2B213DB2CA7CB2E000F78BB /* RxSwift */; };
-		F2B213DF2CA7CB4A000F78BB /* PokemonAPI in Frameworks */ = {isa = PBXBuildFile; productRef = F2B213DE2CA7CB4A000F78BB /* PokemonAPI */; };
 		F2B213E82CA7F2D7000F78BB /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213E72CA7F2D7000F78BB /* ApiClient.swift */; };
 		F2B213EA2CA7F546000F78BB /* PokemonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213E92CA7F546000F78BB /* PokemonApi.swift */; };
 		F2B213ED2CA80819000F78BB /* TopViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213EC2CA80819000F78BB /* TopViewUseCase.swift */; };
@@ -75,7 +74,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2B213DC2CA7CB2E000F78BB /* RxSwift in Frameworks */,
-				F2B213DF2CA7CB4A000F78BB /* PokemonAPI in Frameworks */,
 				F2B213DA2CA7CB2E000F78BB /* RxRelay in Frameworks */,
 				F2B213D82CA7CB2E000F78BB /* RxCocoa in Frameworks */,
 			);
@@ -248,7 +246,6 @@
 				F2B213D72CA7CB2E000F78BB /* RxCocoa */,
 				F2B213D92CA7CB2E000F78BB /* RxRelay */,
 				F2B213DB2CA7CB2E000F78BB /* RxSwift */,
-				F2B213DE2CA7CB4A000F78BB /* PokemonAPI */,
 			);
 			productName = PokemonLibrary;
 			productReference = F2B213A32CA7CA9C000F78BB /* PokemonLibrary.app */;
@@ -324,7 +321,6 @@
 			mainGroup = F2B2139A2CA7CA9C000F78BB;
 			packageReferences = (
 				F2B213D62CA7CB2E000F78BB /* XCRemoteSwiftPackageReference "RxSwift" */,
-				F2B213DD2CA7CB4A000F78BB /* XCRemoteSwiftPackageReference "PokemonAPI" */,
 			);
 			productRefGroup = F2B213A42CA7CA9C000F78BB /* Products */;
 			projectDirPath = "";
@@ -725,14 +721,6 @@
 				minimumVersion = 6.7.1;
 			};
 		};
-		F2B213DD2CA7CB4A000F78BB /* XCRemoteSwiftPackageReference "PokemonAPI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kinkofer/PokemonAPI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.1.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -750,11 +738,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F2B213D62CA7CB2E000F78BB /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
-		};
-		F2B213DE2CA7CB4A000F78BB /* PokemonAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F2B213DD2CA7CB4A000F78BB /* XCRemoteSwiftPackageReference "PokemonAPI" */;
-			productName = PokemonAPI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
