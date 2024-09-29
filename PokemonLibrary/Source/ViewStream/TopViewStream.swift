@@ -47,7 +47,6 @@ public final class ViewStream: TopViewStreamType {
             }
 
         _ = displayResult
-            .debug("displayResult", trimOutput: true)
             .map { displayResult -> [TopViewDataModel.Item] in
                 guard case let .loaded(pokemons) = displayResult else { return [] }
                 return pokemons
