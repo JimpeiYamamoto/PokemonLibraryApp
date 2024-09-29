@@ -2,13 +2,13 @@ import Foundation
 import RxRelay
 import RxSwift
 
-public protocol ViewStreamType {
-    var input: ViewStreamModel.ViewStreamInput { get }
-    var state: ViewStreamModel.ViewStreamState { get }
-    var output: ViewStreamModel.ViewStreamOutput { get }
+public protocol TopViewStreamType {
+    var input: TopViewStreamModel.ViewStreamInput { get }
+    var state: TopViewStreamModel.ViewStreamState { get }
+    var output: TopViewStreamModel.ViewStreamOutput { get }
 }
 
-public enum ViewStreamModel {
+public enum TopViewStreamModel {
     public struct ViewStreamInput {
         public let viewDidLoad: PublishRelay<Void> = .init()
     }
@@ -20,16 +20,16 @@ public enum ViewStreamModel {
     }
 }
 
-public final class ViewStream: ViewStreamType {
-    public let input: ViewStreamModel.ViewStreamInput
-    public let state: ViewStreamModel.ViewStreamState
-    public let output: ViewStreamModel.ViewStreamOutput
+public final class ViewStream: TopViewStreamType {
+    public let input: TopViewStreamModel.ViewStreamInput
+    public let state: TopViewStreamModel.ViewStreamState
+    public let output: TopViewStreamModel.ViewStreamOutput
 
-    private let useCase: UseCaseType
+    private let useCase: TopViewUseCaseType
 
-    public convenience init(useCase: UseCaseType) {
-        let input = ViewStreamModel.ViewStreamInput()
-        let state = ViewStreamModel.ViewStreamState()
+    public convenience init(useCase: TopViewUseCaseType) {
+        let input = TopViewStreamModel.ViewStreamInput()
+        let state = TopViewStreamModel.ViewStreamState()
 
         let output = input.viewDidLoad
             .flatMap { [useCase] _ in
@@ -66,10 +66,10 @@ public final class ViewStream: ViewStreamType {
     }
 
     public init(
-        input: ViewStreamModel.ViewStreamInput,
-        state: ViewStreamModel.ViewStreamState,
-        output: ViewStreamModel.ViewStreamOutput,
-        useCase: UseCaseType
+        input: TopViewStreamModel.ViewStreamInput,
+        state: TopViewStreamModel.ViewStreamState,
+        output: TopViewStreamModel.ViewStreamOutput,
+        useCase: TopViewUseCaseType
     ) {
         self.input = input
         self.state = state

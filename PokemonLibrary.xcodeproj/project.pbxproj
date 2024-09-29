@@ -21,8 +21,8 @@
 		F2B213DF2CA7CB4A000F78BB /* PokemonAPI in Frameworks */ = {isa = PBXBuildFile; productRef = F2B213DE2CA7CB4A000F78BB /* PokemonAPI */; };
 		F2B213E82CA7F2D7000F78BB /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213E72CA7F2D7000F78BB /* ApiClient.swift */; };
 		F2B213EA2CA7F546000F78BB /* PokemonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213E92CA7F546000F78BB /* PokemonApi.swift */; };
-		F2B213ED2CA80819000F78BB /* useCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213EC2CA80819000F78BB /* useCase.swift */; };
-		F2B213F02CA80849000F78BB /* ViewStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213EF2CA80849000F78BB /* ViewStream.swift */; };
+		F2B213ED2CA80819000F78BB /* TopViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213EC2CA80819000F78BB /* TopViewUseCase.swift */; };
+		F2B213F02CA80849000F78BB /* TopViewStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213EF2CA80849000F78BB /* TopViewStream.swift */; };
 		F2B213F22CA84F9D000F78BB /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F12CA84F9D000F78BB /* UIImageExtension.swift */; };
 		F2B213F42CA85205000F78BB /* PokemonCardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */; };
 		F2B213F72CA86F6A000F78BB /* PokemonApiGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F62CA86F6A000F78BB /* PokemonApiGateway.swift */; };
@@ -60,8 +60,8 @@
 		F2B213C92CA7CA9D000F78BB /* PokemonLibraryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonLibraryUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F2B213E72CA7F2D7000F78BB /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		F2B213E92CA7F546000F78BB /* PokemonApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApi.swift; sourceTree = "<group>"; };
-		F2B213EC2CA80819000F78BB /* useCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = useCase.swift; sourceTree = "<group>"; };
-		F2B213EF2CA80849000F78BB /* ViewStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStream.swift; sourceTree = "<group>"; };
+		F2B213EC2CA80819000F78BB /* TopViewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewUseCase.swift; sourceTree = "<group>"; };
+		F2B213EF2CA80849000F78BB /* TopViewStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewStream.swift; sourceTree = "<group>"; };
 		F2B213F12CA84F9D000F78BB /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCardViewCell.swift; sourceTree = "<group>"; };
 		F2B213F62CA86F6A000F78BB /* PokemonApiGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApiGateway.swift; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 		F2B213EB2CA8077F000F78BB /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				F2B213EC2CA80819000F78BB /* useCase.swift */,
+				F2B213EC2CA80819000F78BB /* TopViewUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 		F2B213EE2CA80839000F78BB /* ViewStream */ = {
 			isa = PBXGroup;
 			children = (
-				F2B213EF2CA80849000F78BB /* ViewStream.swift */,
+				F2B213EF2CA80849000F78BB /* TopViewStream.swift */,
 			);
 			path = ViewStream;
 			sourceTree = "<group>";
@@ -366,11 +366,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2B213AB2CA7CA9C000F78BB /* TopViewController.swift in Sources */,
-				F2B213ED2CA80819000F78BB /* useCase.swift in Sources */,
+				F2B213ED2CA80819000F78BB /* TopViewUseCase.swift in Sources */,
 				F2B213A72CA7CA9C000F78BB /* AppDelegate.swift in Sources */,
 				F2B213F72CA86F6A000F78BB /* PokemonApiGateway.swift in Sources */,
 				F2B213A92CA7CA9C000F78BB /* SceneDelegate.swift in Sources */,
-				F2B213F02CA80849000F78BB /* ViewStream.swift in Sources */,
+				F2B213F02CA80849000F78BB /* TopViewStream.swift in Sources */,
 				F2B213EA2CA7F546000F78BB /* PokemonApi.swift in Sources */,
 				F2B213F42CA85205000F78BB /* PokemonCardViewCell.swift in Sources */,
 				F2B213E82CA7F2D7000F78BB /* ApiClient.swift in Sources */,

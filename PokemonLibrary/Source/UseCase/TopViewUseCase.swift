@@ -1,11 +1,11 @@
 import Foundation
 import RxSwift
 
-public protocol UseCaseType {
-    func display(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult>
+public protocol TopViewUseCaseType {
+    func display(offset: Int, limit: Int) -> Observable<TopViewUseCaseModel.DisplayResult>
 }
 
-public final class UseCase: UseCaseType {
+public final class TopViewUseCase: TopViewUseCaseType {
     private let pokemonApiGateway: PokemonApiGatewayType
     private let disposeBag = DisposeBag()
 
@@ -13,8 +13,8 @@ public final class UseCase: UseCaseType {
         self.pokemonApiGateway = pokemonApiGateway
     }
 
-    public func display(offset: Int, limit: Int) -> Observable<UseCaseModel.DisplayResult> {
-        Observable<UseCaseModel.DisplayResult>
+    public func display(offset: Int, limit: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
+        Observable<TopViewUseCaseModel.DisplayResult>
             .create { [disposeBag, pokemonApiGateway] observer in
                 pokemonApiGateway.getPokemonList(limit: limit, offset: offset)
                     .flatMap { pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies, PokemonApiModel.Pokemon)]> in
@@ -28,7 +28,7 @@ public final class UseCase: UseCaseType {
                         return Observable.zip(requests)
                     }
                     .map { results in
-                        results.compactMap { args -> UseCaseModel.DisplayResult.Pokemon? in
+                        results.compactMap { args -> TopViewUseCaseModel.DisplayResult.Pokemon? in
                             let (species, pokemon) = args
                             guard let url = URL(string: pokemon.sprites.front_default ?? ""),
                                   let id = species.id,
@@ -48,7 +48,7 @@ public final class UseCase: UseCaseType {
     }
 }
 
-public enum UseCaseModel {
+public enum TopViewUseCaseModel {
     public enum DisplayResult {
         case loading
         case loaded([Pokemon])
@@ -56,7 +56,7 @@ public enum UseCaseModel {
     }
 }
 
-extension UseCaseModel.DisplayResult {
+extension TopViewUseCaseModel.DisplayResult {
     public struct Pokemon: Equatable {
         public let id: Int
         public let name: String
@@ -74,6 +74,6 @@ extension UseCaseModel.DisplayResult {
     }
 }
 
-extension UseCase {
-    public static let shared = UseCase(pokemonApiGateway: PokemonApiGateway.shared)
+extension TopViewUseCase {
+    public static let shared = TopViewUseCase(pokemonApiGateway: PokemonApiGateway.shared)
 }
