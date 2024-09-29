@@ -21,6 +21,13 @@ public final class TopViewController: UIViewController {
                 self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
             .disposed(by: disposeBag)
+
+        viewStream.output.isLoadingViewHidden
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] isHidden in
+                self?.loadingView.isHidden = isHidden
+            }
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

@@ -17,6 +17,7 @@ public enum TopViewStreamModel {
 
     public struct ViewStreamOutput {
         let pokemonCards: Observable<[TopViewDataModel.Item]>
+        let isLoadingViewHidden: Observable<Bool>
     }
 }
 
@@ -31,35 +32,35 @@ public final class ViewStream: TopViewStreamType {
         let input = TopViewStreamModel.ViewStreamInput()
         let state = TopViewStreamModel.ViewStreamState()
 
-        let output = input.viewDidLoad
+        let displayResult = input.viewDidLoad
             .flatMap { [useCase] _ in
                 return useCase.display(offset: 0, limit: 30)
             }
-            .map { result -> [TopViewDataModel.Item] in
-                switch result {
-                case .loading:
-                    return []
-                case .loaded(let pokemons):
-                    return pokemons
-                        .enumerated()
-                        .map { offset, pokemon -> TopViewDataModel.Item in
-                            .init(
-                                offset: offset,
-                                number: pokemon.id,
-                                name: pokemon.name,
-                                imageUrl: pokemon.imageUrl
-                            )
-                        }
-                case .showError:
-                    return []
-                }
+
+        let pokemonCards = displayResult
+            .map { displayResult -> [TopViewDataModel.Item] in
+                guard case let .loaded(pokemons) = displayResult else { return [] }
+                return pokemons
+                    .enumerated()
+                    .map { offset, pokemon -> TopViewDataModel.Item in
+                        .init(
+                            offset: offset,
+                            number: pokemon.id,
+                            name: pokemon.name,
+                            imageUrl: pokemon.imageUrl
+                        )
+                    }
             }
+
+        let isLoadingViewHidden = displayResult
+            .map { $0 != .loading }
 
         self.init(
             input: input,
             state: state,
             output: .init(
-                pokemonCards: output
+                pokemonCards: pokemonCards,
+                isLoadingViewHidden: isLoadingViewHidden
             ),
             useCase: useCase
         )

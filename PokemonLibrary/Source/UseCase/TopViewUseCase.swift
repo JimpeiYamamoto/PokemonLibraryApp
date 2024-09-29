@@ -49,7 +49,7 @@ public final class TopViewUseCase: TopViewUseCaseType {
 }
 
 public enum TopViewUseCaseModel {
-    public enum DisplayResult {
+    public enum DisplayResult: Equatable {
         case loading
         case loaded([Pokemon])
         case showError
