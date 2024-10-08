@@ -11,7 +11,7 @@ public protocol TopViewStreamType {
 public enum TopViewStreamModel {
     public struct ViewStreamInput {
         public let viewDidLoad: PublishRelay<Void> = .init()
-        public let scrollToBottom: PublishRelay<Void> = .init()
+        public let didScrollCollectionView: PublishRelay<[IndexPath]> = .init()
     }
 
     public struct ViewStreamState {
@@ -35,16 +35,15 @@ public final class ViewStream: TopViewStreamType {
         let input = TopViewStreamModel.ViewStreamInput()
         let state = TopViewStreamModel.ViewStreamState()
 
-        let displayResult = Observable
-            .merge(
-                input.viewDidLoad.asObservable(),
-                input.scrollToBottom.asObservable()
-            )
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .flatMap { [useCase] _ -> Observable<TopViewUseCaseModel.DisplayResult> in
+        let displayResult = input.didScrollCollectionView.asObservable()
+            .map { $0.max()?.last ?? 0 }
+            .distinctUntilChanged()
+            .filter { $0 > state.pokemonCards.value.count - 2 }
+            .flatMap { [useCase] indexPaths -> Observable<TopViewUseCaseModel.DisplayResult> in
                 let offset = state.pokemonCards.value.count
                 return useCase.display(offset: offset)
             }
+            .share()
 
         _ = displayResult
             .map { displayResult -> [TopViewDataModel.Item] in

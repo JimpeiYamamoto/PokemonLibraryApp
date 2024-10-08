@@ -31,16 +31,10 @@ public final class TopViewController: UIViewController {
             .disposed(by: disposeBag)
 
         collectionView.rx.contentOffset
-            .subscribe { [weak self] contentOffset in
-                guard let me = self else { return }
-                let offsetY = contentOffset.y
-                let contentHeight = me.collectionView.contentSize.height
-                let boundsHeight = me.collectionView.bounds.size.height
-                let isBottom = offsetY + boundsHeight >= contentHeight
-                if isBottom {
-                    viewStream.input.scrollToBottom.accept(())
-                }
+            .map { [weak self] _ -> [IndexPath] in
+                self?.collectionView.indexPathsForVisibleItems ?? []
             }
+            .subscribe { viewStream.input.didScrollCollectionView.accept($0) }
             .disposed(by: disposeBag)
     }
     
@@ -128,7 +122,7 @@ public final class TopViewController: UIViewController {
             loadingView.widthAnchor.constraint(equalToConstant: 100),
         ])
 
-        viewStream.input.viewDidLoad.accept(())
+//        viewStream.input.viewDidLoad.accept(())
     }
 }
 
