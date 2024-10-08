@@ -127,8 +127,6 @@ public final class TopViewController: UIViewController {
             loadingView.heightAnchor.constraint(equalToConstant: 100),
             loadingView.widthAnchor.constraint(equalToConstant: 100),
         ])
-
-//        viewStream.input.viewDidLoad.accept(())
     }
 }
 
