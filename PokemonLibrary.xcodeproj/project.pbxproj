@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F2298E312CB57E350074390B /* DetailPokemonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2298E302CB57E350074390B /* DetailPokemonViewController.swift */; };
 		F2B213A72CA7CA9C000F78BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213A62CA7CA9C000F78BB /* AppDelegate.swift */; };
 		F2B213A92CA7CA9C000F78BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213A82CA7CA9C000F78BB /* SceneDelegate.swift */; };
 		F2B213AB2CA7CA9C000F78BB /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213AA2CA7CA9C000F78BB /* TopViewController.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F2298E302CB57E350074390B /* DetailPokemonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPokemonViewController.swift; sourceTree = "<group>"; };
 		F2B213A32CA7CA9C000F78BB /* PokemonLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B213A62CA7CA9C000F78BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2B213A82CA7CA9C000F78BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				F2B213AA2CA7CA9C000F78BB /* TopViewController.swift */,
 				F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */,
 				F2B213F82CA9152E000F78BB /* LoadingView.swift */,
+				F2298E302CB57E350074390B /* DetailPokemonViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2B213AB2CA7CA9C000F78BB /* TopViewController.swift in Sources */,
+				F2298E312CB57E350074390B /* DetailPokemonViewController.swift in Sources */,
 				F2B213ED2CA80819000F78BB /* TopViewUseCase.swift in Sources */,
 				F2B213A72CA7CA9C000F78BB /* AppDelegate.swift in Sources */,
 				F2B213F92CA9152E000F78BB /* LoadingView.swift in Sources */,

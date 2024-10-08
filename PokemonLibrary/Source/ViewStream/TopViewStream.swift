@@ -12,7 +12,6 @@ public enum TopViewStreamModel {
     public struct ViewStreamInput {
         public let viewDidLoad: PublishRelay<Void> = .init()
         public let didScrollCollectionView: PublishRelay<[IndexPath]> = .init()
-        public let didTapCard: PublishRelay<IndexPath> = .init()
     }
 
     public struct ViewStreamState {
@@ -67,11 +66,6 @@ public final class ViewStream: TopViewStreamType {
 
         let isLoadingViewHidden = displayResult
             .map { $0 != .loading }
-
-        let didTap = input.didTapCard
-            .subscribe { indexPath in
-                print("tappedIndexPath: ", indexPath)
-            }
 
         self.init(
             input: input,

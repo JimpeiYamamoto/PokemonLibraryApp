@@ -74,7 +74,10 @@ public final class TopViewController: UIViewController {
         )
         cell?.didTapView
             .subscribe { _ in
-                me.viewStream.input.didTapCard.accept(indexPath)
+                let nextVC = DetailPokemonViewController()
+                if me.presentedViewController == nil {
+                    me.present(nextVC, animated: true)
+                }
             }
             .disposed(by: me.disposeBag)
         return cell
