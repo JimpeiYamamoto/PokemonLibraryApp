@@ -72,4 +72,10 @@ public final class PokemonCardViewCell: UICollectionViewCell {
             spriteImageView.image = image
         }
     }
+
+    public override func prepareForReuse() {
+        numberLabel.text = ""
+        nameLabel.text = ""
+        spriteImageView.image = nil
+    }
 }
