@@ -1,8 +1,12 @@
 import Foundation
 import UIKit
+import RxCocoa
+import RxSwift
 
 public final class PokemonCardViewCell: UICollectionViewCell {
     static let reuseIdentifier = "pokemonCardViewCell"
+    public let didTapView = PublishRelay<Void>()
+    private let disposeBag = DisposeBag()
 
     private let numberLabel: UILabel = {
         let label = UILabel()
@@ -56,6 +60,13 @@ public final class PokemonCardViewCell: UICollectionViewCell {
             spriteImageView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
             spriteImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
+
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.rx.event
+            .map { _ in () }
+            .bind(to: didTapView)
+            .disposed(by: disposeBag)
+        addGestureRecognizer(tapGesture)
     }
 
     required init?(coder: NSCoder) {

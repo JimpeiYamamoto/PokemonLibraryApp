@@ -59,18 +59,24 @@ public final class TopViewController: UIViewController {
     
     private lazy var dataSource = UICollectionViewDiffableDataSource<TopViewDataModel.Section, TopViewDataModel.Item>(
         collectionView: collectionView
-    ) { collectionView, indexPath, itemIdentifier in
-
+    ) { [weak self] collectionView, indexPath, itemIdentifier in
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: PokemonCardViewCell.reuseIdentifier,
             for: indexPath
         ) as? PokemonCardViewCell
+
+        guard let me = self else { return cell }
 
         cell?.configure(
             number: itemIdentifier.number,
             name: itemIdentifier.name,
             imageUrl: itemIdentifier.imageUrl
         )
+        cell?.didTapView
+            .subscribe { _ in
+                me.viewStream.input.didTapCard.accept(indexPath)
+            }
+            .disposed(by: me.disposeBag)
         return cell
     }
 
