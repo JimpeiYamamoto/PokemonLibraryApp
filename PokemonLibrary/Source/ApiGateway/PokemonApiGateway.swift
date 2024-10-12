@@ -2,9 +2,9 @@ import Foundation
 import RxSwift
 
 public protocol PokemonApiGatewayType {
-    func getPokemonList(offset: Int) -> Observable<PokemonApiModel.PokemonList>
-    func getPokemonSpecies(name: String) -> Observable<PokemonApiModel.PokemonSpecies?>
-    func getPokemon(name: String) -> Observable<PokemonApiModel.Pokemon?>
+    func getPokemonNames(offset: Int) -> Observable<[String]>
+    func getPokemonSpecies(name: String) -> Observable<PokemonApiGatewayModel.Species?>
+    func getPokemon(name: String) -> Observable<PokemonApiGatewayModel.Pokemon?>
 }
 
 public final class PokemonApiGateway: PokemonApiGatewayType {
@@ -14,12 +14,12 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
         self.pokemonApi = pokemonApi
     }
 
-    public func getPokemonList(offset: Int) -> Observable<PokemonApiModel.PokemonList> {
-        Observable<PokemonApiModel.PokemonList>.create { [pokemonApi] observer in
+    public func getPokemonNames(offset: Int) -> Observable<[String]> {
+        Observable<[String]>.create { [pokemonApi] observer in
             pokemonApi.getPokemonList(
                 offset: offset,
-                onSuccess: { pokemonList in
-                    observer.onNext(pokemonList)
+                onSuccess: { response in
+                    observer.onNext(response.results.compactMap(\.name))
                 },
                 onError: { error in
                     observer.onError(error ?? NSError())
@@ -29,12 +29,19 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
         }
     }
 
-    public func getPokemonSpecies(name: String) -> Observable<PokemonApiModel.PokemonSpecies?> {
-        Observable<PokemonApiModel.PokemonSpecies?>.create { [pokemonApi] observer in
+    public func getPokemonSpecies(name: String) -> Observable<PokemonApiGatewayModel.Species?> {
+        Observable<PokemonApiGatewayModel.Species?>.create { [pokemonApi] observer in
             pokemonApi.getPokemonSpecies(
                 name: name,
-                onSuccess: { species in
-                    observer.onNext(species)
+                onSuccess: { response in
+                    guard let id = response.id,
+                          let name = response.names.filter({ $0.language.name == "ja" }).first?.name,
+                          let flavorText = response.flavor_text_entries.filter({ $0.language.name == "ja" }).first?.flavor_text
+                    else {
+                        observer.onNext(nil)
+                        return
+                    }
+                    observer.onNext(.init(id: id, name: name, flavorText: flavorText))
                 },
                 onError: { error in
                     observer.onNext(nil)
@@ -44,12 +51,29 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
         }
     }
 
-    public func getPokemon(name: String) -> Observable<PokemonApiModel.Pokemon?> {
-        Observable<PokemonApiModel.Pokemon?>.create { [pokemonApi] observer in
+    public func getPokemon(name: String) -> Observable<PokemonApiGatewayModel.Pokemon?> {
+        Observable<PokemonApiGatewayModel.Pokemon?>.create { [pokemonApi] observer in
             pokemonApi.getPokemon(
                 name: name,
                 onSuccess: { pokemon in
-                    observer.onNext(pokemon)
+                    guard let id = pokemon.id,
+                          let height = pokemon.height,
+                          let weight = pokemon.weight,
+                          let imageUrl = pokemon.sprites.front_default,
+                          let crySoundUrl = pokemon.cries.latest
+                    else {
+                        observer.onNext(nil)
+                        return
+                    }
+                    observer.onNext(
+                        .init(
+                            id: id,
+                            height: height,
+                            weight: weight,
+                            imageUrl: imageUrl,
+                            crySoundUrl: crySoundUrl
+                        )
+                    )
                 },
                 onError: { error in
                     observer.onNext(nil)
@@ -57,6 +81,22 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
             )
             return Disposables.create()
         }
+    }
+}
+
+public enum PokemonApiGatewayModel {
+    public struct Species {
+        public let id: Int
+        public let name: String
+        public let flavorText: String
+    }
+
+    public struct Pokemon {
+        public let id: Int
+        public let height: Int
+        public let weight: Int
+        public let imageUrl: String
+        public let crySoundUrl: String
     }
 }
 

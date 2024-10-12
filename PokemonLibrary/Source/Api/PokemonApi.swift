@@ -84,8 +84,16 @@ public enum PokemonApiModel {
     }
 
     public struct Pokemon: Decodable {
+        let id: Int?
         let height: Int?
+        let weight: Int?
         let sprites: PokemonSprites
+        let cries: PokemonCries
+    }
+
+    public struct PokemonCries: Decodable {
+        public let latest: String?
+        public let legacy: String?
     }
 
     public struct PokemonSprites: Decodable {

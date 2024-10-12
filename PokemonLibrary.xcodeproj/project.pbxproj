@@ -98,12 +98,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F2A399282CB6F9E300742FC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F2B2139A2CA7CA9C000F78BB = {
 			isa = PBXGroup;
 			children = (
 				F2B213A52CA7CA9C000F78BB /* PokemonLibrary */,
 				F2B213BC2CA7CA9D000F78BB /* PokemonLibraryTests */,
 				F2B213C62CA7CA9D000F78BB /* PokemonLibraryUITests */,
+				F2A399282CB6F9E300742FC2 /* Frameworks */,
 				F2B213A42CA7CA9C000F78BB /* Products */,
 			);
 			sourceTree = "<group>";

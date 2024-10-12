@@ -14,11 +14,10 @@ public final class TopViewUseCase: TopViewUseCaseType {
     }
 
     public func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
-        pokemonApiGateway.getPokemonList(offset: offset)
-            .flatMap { [weak self] pokemonList -> Observable<[(PokemonApiModel.PokemonSpecies?, PokemonApiModel.Pokemon?)]> in
-                let requests = pokemonList.results.map { result -> Observable<(PokemonApiModel.PokemonSpecies?, PokemonApiModel.Pokemon?)> in
-                    guard let name = result.name,
-                          let me = self
+        pokemonApiGateway.getPokemonNames(offset: offset)
+            .flatMap { [weak self] names -> Observable<[(PokemonApiGatewayModel.Species?, PokemonApiGatewayModel.Pokemon?)]> in
+                let requests = names.map { name -> Observable<(PokemonApiGatewayModel.Species?, PokemonApiGatewayModel.Pokemon?)> in
+                    guard let me = self
                     else { return Observable.just((nil, nil)) }
 
                     let species = me.pokemonApiGateway.getPokemonSpecies(name: name)
@@ -32,11 +31,14 @@ public final class TopViewUseCase: TopViewUseCaseType {
                     let (species, pokemon) = args
                     guard let species = species,
                           let pokemon = pokemon,
-                          let url = URL(string: pokemon.sprites.front_default ?? ""),
-                          let id = species.id,
-                          let name = species.names.filter({ $0.language.name == "ja" }).first?.name
+                          species.id == pokemon.id,
+                          let imageUrl = URL(string: pokemon.imageUrl)
                     else { return nil }
-                    return .init(id: id, name: name, imageUrl: url)
+                    return .init(
+                        id: species.id,
+                        name: species.name,
+                        imageUrl: imageUrl
+                    )
                 }
             }
             .map { result -> TopViewUseCaseModel.DisplayResult in
@@ -58,12 +60,12 @@ extension TopViewUseCaseModel.DisplayResult {
     public struct Pokemon: Equatable {
         public let id: Int
         public let name: String
-        public let imageUrl: URL?
+        public let imageUrl: URL
 
         public init(
             id: Int,
             name: String,
-            imageUrl: URL?
+            imageUrl: URL
         ) {
             self.id = id
             self.name = name
