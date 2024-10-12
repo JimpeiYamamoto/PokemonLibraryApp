@@ -66,29 +66,29 @@ public final class PokemonApi: PokemonApiType {
 
 public enum PokemonApiModel {
     public struct PokemonList: Decodable {
-        let count: Int?
-        let next: String?
-        let previous: String?
-        let results: [PokemonListResult]
+        public let count: Int?
+        public let next: String?
+        public let previous: String?
+        public let results: [PokemonListResult]
 
-        struct PokemonListResult: Decodable {
-            let name: String?
-            let url: String?
+        public struct PokemonListResult: Decodable {
+            public let name: String?
+            public let url: String?
         }
     }
 
     public struct PokemonSpecies: Decodable {
-        let id: Int?
-        let names: [Name]
-        let flavor_text_entries: [FlavorText]
+        public let id: Int?
+        public let names: [Name]
+        public let flavor_text_entries: [FlavorText]
     }
 
     public struct Pokemon: Decodable {
-        let id: Int?
-        let height: Int?
-        let weight: Int?
-        let sprites: PokemonSprites
-        let cries: PokemonCries
+        public let id: Int?
+        public let height: Int?
+        public let weight: Int?
+        public let sprites: PokemonSprites
+        public let cries: PokemonCries
     }
 
     public struct PokemonCries: Decodable {
@@ -97,23 +97,23 @@ public enum PokemonApiModel {
     }
 
     public struct PokemonSprites: Decodable {
-        let front_default: String?
-        let back_default: String?
+        public let front_default: String?
+        public let back_default: String?
     }
 
     public struct Name: Decodable {
-        let language: Language
-        let name: String?
+        public let language: Language
+        public let name: String?
     }
 
     public struct FlavorText: Decodable {
-        let flavor_text: String?
-        let language: Language
+        public let flavor_text: String?
+        public let language: Language
     }
 
     public struct Language: Decodable {
-        let name: String?
-        let url: String?
+        public let name: String?
+        public let url: String?
     }
 }
 
