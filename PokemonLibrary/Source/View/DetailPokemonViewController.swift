@@ -4,12 +4,14 @@ import UIKit
 public final class DetailPokemonViewController: UIViewController {
 
     private lazy var containerView: UIStackView = {
+        let emptyView = UIView()
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
         let view = UIStackView(
             arrangedSubviews: [
                 headerPokemonView,
-                footerAbilityView,
+                abilitiesView,
                 flavorTextView,
-                UIView()
+                emptyView
             ]
         )
         view.axis = .vertical
@@ -59,7 +61,6 @@ public final class DetailPokemonViewController: UIViewController {
         )
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.axis = .horizontal
-        containerView.spacing = 8.0
         containerView.alignment = .center
         return containerView
     }()
@@ -72,7 +73,7 @@ public final class DetailPokemonViewController: UIViewController {
         return view
     }()
 
-    private let footerAbilityView: UIStackView = {
+    private let abilitiesView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 8.0
@@ -81,16 +82,30 @@ public final class DetailPokemonViewController: UIViewController {
         return view
     }()
 
+    private let voiceButtonView: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setImage(UIImage(systemName: "megaphone"), for: .normal)
+        view.tintColor = .black
+
+        return view
+    }()
+
     public init() {
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .white
 
         view.addSubview(containerView)
+        view.addSubview(voiceButtonView)
+        NSLayoutConstraint.activate([
+            voiceButtonView.topAnchor.constraint(equalTo: pokemonCardView.topAnchor, constant: 4),
+            voiceButtonView.rightAnchor.constraint(equalTo: pokemonCardView.rightAnchor, constant: -4),
+        ])
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 48),
             containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            containerView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            containerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            containerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -32),
+            containerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 32),
         ])
 
         NSLayoutConstraint.activate([
@@ -100,18 +115,15 @@ public final class DetailPokemonViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             headerPokemonView.heightAnchor.constraint(equalToConstant: 150),
-            headerPokemonView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 32),
-            headerPokemonView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -32),
+            headerPokemonView.rightAnchor.constraint(equalTo: containerView.rightAnchor),
         ])
 
         NSLayoutConstraint.activate([
-            flavorTextView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 32),
-            flavorTextView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -32),
-            flavorTextView.topAnchor.constraint(equalTo: footerAbilityView.bottomAnchor, constant: 16)
+            flavorTextView.topAnchor.constraint(equalTo: abilitiesView.bottomAnchor, constant: 16)
         ])
 
         NSLayoutConstraint.activate([
-            footerAbilityView.heightAnchor.constraint(equalToConstant: 35)
+            abilitiesView.heightAnchor.constraint(equalToConstant: 35)
         ])
 
         let mockData = DetailPokemonViewDataModel.detailInformation(
@@ -133,7 +145,7 @@ public final class DetailPokemonViewController: UIViewController {
             let abilityView = AbilityView()
             abilityView.translatesAutoresizingMaskIntoConstraints = false
             abilityView.configure(abilityText: "  \(text)  ")
-            footerAbilityView.addArrangedSubview(abilityView)
+            abilitiesView.addArrangedSubview(abilityView)
         }
     }
     
