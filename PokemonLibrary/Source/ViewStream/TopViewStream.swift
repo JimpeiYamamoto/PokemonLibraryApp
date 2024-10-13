@@ -1,6 +1,7 @@
 import Foundation
 import RxRelay
 import RxSwift
+import UseCase
 
 public protocol TopViewStreamType {
     var input: TopViewStreamModel.ViewStreamInput { get }
@@ -15,12 +16,12 @@ public enum TopViewStreamModel {
     }
 
     public struct ViewStreamState {
-        let pokemonCards = BehaviorRelay<[TopViewDataModel.Item]>(value: [])
+        public let pokemonCards = BehaviorRelay<[TopViewStreamDataModel.Item]>(value: [])
     }
 
     public struct ViewStreamOutput {
-        let pokemonCards: Observable<[TopViewDataModel.Item]>
-        let isLoadingViewHidden: Observable<Bool>
+        public let pokemonCards: Observable<[TopViewStreamDataModel.Item]>
+        public let isLoadingViewHidden: Observable<Bool>
     }
 }
 
@@ -46,11 +47,11 @@ public final class ViewStream: TopViewStreamType {
             .share()
 
         _ = displayResult
-            .map { displayResult -> [TopViewDataModel.Item] in
+            .map { displayResult -> [TopViewStreamDataModel.Item] in
                 guard case let .loaded(pokemons) = displayResult else { return [] }
                 return pokemons
                     .enumerated()
-                    .map { offset, pokemon -> TopViewDataModel.Item in
+                    .map { offset, pokemon -> TopViewStreamDataModel.Item in
                         .init(
                             offset: offset + state.pokemonCards.value.count,
                             number: pokemon.id,
@@ -91,3 +92,22 @@ public final class ViewStream: TopViewStreamType {
     }
 }
 
+public enum TopViewStreamDataModel {
+    public enum Section {
+        case identity
+    }
+
+    public struct Item: Hashable {
+        private let offset: Int
+        public let number: Int
+        public let name: String
+        public let imageUrl: URL?
+
+        public init(offset: Int, number: Int, name: String, imageUrl: URL?) {
+            self.offset = offset
+            self.number = number
+            self.name = name
+            self.imageUrl = imageUrl
+        }
+    }
+}

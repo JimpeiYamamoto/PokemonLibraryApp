@@ -1,0 +1,52 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "api",
+          "kind" : "fileSystem",
+          "location" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/Api",
+          "name" : "Api"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/Api"
+        },
+        "subpath" : "api"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "apigateway",
+          "kind" : "fileSystem",
+          "location" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/ApiGateway",
+          "name" : "ApiGateway"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/ApiGateway"
+        },
+        "subpath" : "apigateway"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "usecase",
+          "kind" : "fileSystem",
+          "location" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/UseCase",
+          "name" : "UseCase"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/UseCase"
+        },
+        "subpath" : "usecase"
+      }
+    ]
+  },
+  "version" : 6
+}

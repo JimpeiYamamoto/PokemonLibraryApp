@@ -1,11 +1,6 @@
-//
-//  SceneDelegate.swift
-//  PokemonLibrary
-//
-//  Created by 山本 迅平 on 9/28/24.
-//
-
 import UIKit
+import UseCase
+import ViewStream
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

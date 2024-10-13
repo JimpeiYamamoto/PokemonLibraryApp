@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import ViewStream
 
 public final class TopViewController: UIViewController {
 
@@ -15,7 +16,7 @@ public final class TopViewController: UIViewController {
         viewStream.output.pokemonCards
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] result in
-                var snapshot = NSDiffableDataSourceSnapshot<TopViewDataModel.Section, TopViewDataModel.Item>()
+                var snapshot = NSDiffableDataSourceSnapshot<TopViewStreamDataModel.Section, TopViewStreamDataModel.Item>()
                 snapshot.deleteAllItems()
                 snapshot.appendSections([.identity])
                 snapshot.appendItems(result, toSection: .identity)
@@ -57,7 +58,7 @@ public final class TopViewController: UIViewController {
         return view
     }()
     
-    private lazy var dataSource = UICollectionViewDiffableDataSource<TopViewDataModel.Section, TopViewDataModel.Item>(
+    private lazy var dataSource = UICollectionViewDiffableDataSource<TopViewStreamDataModel.Section, TopViewStreamDataModel.Item>(
         collectionView: collectionView
     ) { [weak self] collectionView, indexPath, itemIdentifier in
         let cell = collectionView.dequeueReusableCell(
@@ -133,22 +134,3 @@ public final class TopViewController: UIViewController {
     }
 }
 
-public enum TopViewDataModel {
-    enum Section {
-        case identity
-    }
-
-    struct Item: Hashable {
-        private let offset: Int
-        let number: Int
-        let name: String
-        let imageUrl: URL?
-
-        public init(offset: Int, number: Int, name: String, imageUrl: URL?) {
-            self.offset = offset
-            self.number = number
-            self.name = name
-            self.imageUrl = imageUrl
-        }
-    }
-}
