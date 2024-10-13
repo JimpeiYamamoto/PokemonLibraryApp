@@ -4,12 +4,19 @@ import UIKit
 public final class DetailPokemonViewController: UIViewController {
 
     private lazy var containerView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [headerPokemonView, flavorTextView, UIView()])
+        let view = UIStackView(
+            arrangedSubviews: [
+                headerPokemonView,
+                footerAbilityView,
+                flavorTextView,
+                UIView()
+            ]
+        )
         view.axis = .vertical
-        view.spacing = 16.0
+        view.spacing = 12.0
         view.alignment = .center
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
+        view.distribution = .equalSpacing
         return view
     }()
 
@@ -33,13 +40,23 @@ public final class DetailPokemonViewController: UIViewController {
     }()
 
     private lazy var headerPokemonView: UIStackView = {
-        let descriptionView = UIStackView(arrangedSubviews: [weightLabel, heightLabel, footerAbilityView])
+        let descriptionView = UIStackView(
+            arrangedSubviews: [
+                weightLabel,
+                heightLabel
+            ]
+        )
         descriptionView.translatesAutoresizingMaskIntoConstraints = false
         descriptionView.axis = .vertical
         descriptionView.spacing = 12.0
         descriptionView.alignment = .center
 
-        let containerView = UIStackView(arrangedSubviews: [pokemonCardView, descriptionView])
+        let containerView = UIStackView(
+            arrangedSubviews: [
+                pokemonCardView,
+                descriptionView
+            ]
+        )
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.axis = .horizontal
         containerView.spacing = 8.0
@@ -51,6 +68,7 @@ public final class DetailPokemonViewController: UIViewController {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.numberOfLines = 0
+        view.sizeToFit()
         return view
     }()
 
@@ -58,7 +76,7 @@ public final class DetailPokemonViewController: UIViewController {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 8.0
-        view.alignment = .center
+        view.alignment = .leading
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -82,13 +100,18 @@ public final class DetailPokemonViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             headerPokemonView.heightAnchor.constraint(equalToConstant: 150),
-            headerPokemonView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 16),
-            headerPokemonView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -16),
+            headerPokemonView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 32),
+            headerPokemonView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -32),
         ])
 
         NSLayoutConstraint.activate([
-            flavorTextView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 24),
-            flavorTextView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -24),
+            flavorTextView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 32),
+            flavorTextView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -32),
+            flavorTextView.topAnchor.constraint(equalTo: footerAbilityView.bottomAnchor, constant: 16)
+        ])
+
+        NSLayoutConstraint.activate([
+            footerAbilityView.heightAnchor.constraint(equalToConstant: 35)
         ])
 
         let mockData = DetailPokemonViewDataModel.detailInformation(
@@ -99,7 +122,7 @@ public final class DetailPokemonViewController: UIViewController {
             flavorText: "ほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげ",
             image: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")!,
             sound: URL(string: "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/1.ogg")!,
-            abilities: ["ほげほげ", "ふーー"]
+            abilities: ["ほげほげ", "ふーー", "ふがふがふが"]
         )
 
         pokemonCardView.configure(number: mockData.id, name: mockData.name, imageUrl: mockData.image)

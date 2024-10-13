@@ -17,8 +17,8 @@ public final class AbilityView: UIView {
 
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: topAnchor),
-            label.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
-            label.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+            label.leftAnchor.constraint(equalTo: leftAnchor),
+            label.rightAnchor.constraint(equalTo: rightAnchor),
             label.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
