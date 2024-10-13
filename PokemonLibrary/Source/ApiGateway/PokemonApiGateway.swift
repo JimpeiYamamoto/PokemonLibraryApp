@@ -6,6 +6,7 @@ public protocol PokemonApiGatewayType {
     func getPokemonNames(offset: Int) -> Observable<[String]>
     func getPokemonSpecies(name: String) -> Observable<PokemonApiGatewayModel.Species?>
     func getPokemon(name: String) -> Observable<PokemonApiGatewayModel.Pokemon?>
+    func getPokemonAbility(name: String) -> Observable<PokemonApiGatewayModel.Ability?>
 }
 
 public final class PokemonApiGateway: PokemonApiGatewayType {
@@ -72,11 +73,42 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
                             height: height,
                             weight: weight,
                             imageUrl: imageUrl,
-                            crySoundUrl: crySoundUrl
+                            crySoundUrl: crySoundUrl,
+                            abilities: pokemon.abilities.compactMap { ability in
+                                ability.ability?.name
+                            }
                         )
                     )
                 },
                 onError: { error in
+                    observer.onNext(nil)
+                }
+            )
+            return Disposables.create()
+        }
+    }
+
+    public func getPokemonAbility(name: String) -> Observable<PokemonApiGatewayModel.Ability?> {
+        Observable<PokemonApiGatewayModel.Ability?>.create { [pokemonApi] observer in
+            pokemonApi.getAbility(
+                name: name,
+                onSuccess: { response in
+                    guard let id = response.id,
+                          let name = response.names?.filter { $0.language.name == "ja" }.first?.name,
+                          let flavorText = response.flavor_text_entries?.filter { $0.language?.name == "ja" }.first?.flavor_text
+                    else {
+                        observer.onNext(nil)
+                        return
+                    }
+                    observer.onNext(
+                        .init(
+                            id: id,
+                            name: name,
+                            flavorText: flavorText
+                        )
+                    )
+                },
+                onError: { _ in
                     observer.onNext(nil)
                 }
             )
@@ -98,6 +130,13 @@ public enum PokemonApiGatewayModel {
         public let weight: Int
         public let imageUrl: String
         public let crySoundUrl: String
+        public let abilities: [String]
+    }
+
+    public struct Ability {
+        public let id: Int
+        public let name: String
+        public let flavorText: String
     }
 }
 

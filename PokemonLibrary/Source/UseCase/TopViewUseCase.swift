@@ -27,6 +27,7 @@ public final class TopViewUseCase: TopViewUseCaseType {
                 imageUrl: savedPokemon.imageUrl,
                 image: data,
                 weight: savedPokemon.weight,
+                height: savedPokemon.height,
                 abilities: savedPokemon.abilities,
                 flavorText: savedPokemon.flavorText
             )
@@ -38,11 +39,23 @@ public final class TopViewUseCase: TopViewUseCaseType {
             return Observable<TopViewUseCaseModel.DisplayResult>.create { [weak self] observer in
                 guard let me = self else { return Disposables.create() }
 
-                observer.onNext(.loaded(me.pokemonRepository.get()
-                    .sorted(by: { $0.id < $1.id })
-                    .map { pokemon in
-                        .init(id: pokemon.id, name: pokemon.name, imageUrl: pokemon.imageUrl, imageData: pokemon.image)
-                    }))
+                observer.onNext(
+                    .loaded(
+                        me.pokemonRepository.get()
+                            .sorted(by: { $0.id < $1.id })
+                            .map { pokemon in
+                                .init(
+                                    id: pokemon.id,
+                                    name: pokemon.name,
+                                    imageUrl: pokemon.imageUrl,
+                                    imageData: pokemon.image,
+                                    weight: pokemon.weight,
+                                    height: pokemon.height,
+                                    abilities: pokemon.abilities
+                                )
+                            }
+                    )
+                )
                 return Disposables.create()
             }
             .startWith(.loading)
@@ -71,7 +84,10 @@ public final class TopViewUseCase: TopViewUseCaseType {
                         id: species.id,
                         name: species.name,
                         imageUrl: imageUrl,
-                        imageData: nil
+                        imageData: nil,
+                        weight: pokemon.weight,
+                        height: pokemon.height,
+                        abilities: pokemon.abilities
                     )
                 }
             }
@@ -83,8 +99,9 @@ public final class TopViewUseCase: TopViewUseCaseType {
                         name: pokemon.name,
                         imageUrl: pokemon.imageUrl,
                         image: nil,
-                        weight: nil,
-                        abilities: [],
+                        weight: pokemon.weight,
+                        height: pokemon.height,
+                        abilities: pokemon.abilities,
                         flavorText: nil
                     )
                 })
@@ -110,12 +127,26 @@ extension TopViewUseCaseModel.DisplayResult {
         public let name: String
         public let imageUrl: URL
         public let imageData: Data?
+        public let weight: Int
+        public let height: Int
+        public let abilities: [String]
 
-        public init(id: Int, name: String, imageUrl: URL, imageData: Data?) {
+        public init(
+            id: Int,
+            name: String,
+            imageUrl: URL,
+            imageData: Data?,
+            weight: Int,
+            height: Int,
+            abilities: [String]
+        ) {
             self.id = id
             self.name = name
             self.imageUrl = imageUrl
             self.imageData = imageData
+            self.weight = weight
+            self.height = height
+            self.abilities = abilities
         }
     }
 }

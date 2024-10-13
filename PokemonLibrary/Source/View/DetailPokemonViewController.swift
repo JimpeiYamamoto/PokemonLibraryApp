@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import ViewStream
 
 public final class DetailPokemonViewController: UIViewController {
 
@@ -112,7 +113,7 @@ public final class DetailPokemonViewController: UIViewController {
             abilitiesView.heightAnchor.constraint(equalToConstant: 35)
         ])
 
-        let mockData = DetailPokemonViewDataModel.detailInformation(
+        let mockData = DetailPokemonViewStreamModel.DetailInformation(
             id: 4,
             name: "フシギバナ",
             weight: 100,
@@ -141,18 +142,5 @@ public final class DetailPokemonViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-    }
-}
-
-public enum DetailPokemonViewDataModel {
-    public struct detailInformation {
-        public let id: Int
-        public let name: String
-        public let weight: Int
-        public let height: Int
-        public let flavorText: String
-        public let image: URL
-        public let sound: URL
-        public let abilities: [String]
     }
 }

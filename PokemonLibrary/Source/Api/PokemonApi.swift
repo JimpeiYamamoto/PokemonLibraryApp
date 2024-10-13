@@ -18,6 +18,12 @@ public protocol PokemonApiType {
         onSuccess: @escaping (PokemonApiModel.Pokemon) -> Void,
         onError: @escaping (Error?) -> Void
     )
+
+    func getAbility(
+        name: String,
+        onSuccess: @escaping (PokemonApiModel.Ability) -> Void,
+        onError: @escaping (Error?) -> Void
+    )
 }
 
 public final class PokemonApi: PokemonApiType {
@@ -58,6 +64,18 @@ public final class PokemonApi: PokemonApiType {
     ) {
         apiClient.request(
             url: URL(string: "https://pokeapi.co/api/v2/pokemon/\(name)")!,
+            onSuccess: onSuccess,
+            onError: onError
+        )
+    }
+
+    public func getAbility(
+        name: String,
+        onSuccess: @escaping (PokemonApiModel.Ability) -> Void,
+        onError: @escaping ((any Error)?) -> Void
+    ) {
+        apiClient.request(
+            url: URL(string: "https://pokeapi.co/api/v2/ability/\(name)")!,
             onSuccess: onSuccess,
             onError: onError
         )
