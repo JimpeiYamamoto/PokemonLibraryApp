@@ -2,9 +2,9 @@ import Foundation
 import UIKit
 
 extension UIImage {
-    public static func loadImage(
+    public static func loadImageData(
         from url: URL?,
-        completion: @escaping (UIImage?) -> Void
+        completion: @escaping (Data?) -> Void
     ) {
         DispatchQueue.global(qos: .default).async {
             guard let url = url else {
@@ -12,10 +12,9 @@ extension UIImage {
                 return 
             }
             do {
-                let data = try Data(contentsOf: url)
-                let image = UIImage(data: data)
+                let imageData = try Data(contentsOf: url)
                 DispatchQueue.main.async {
-                    completion(image)
+                    completion(imageData)
                 }
             } catch {
                 completion(nil)

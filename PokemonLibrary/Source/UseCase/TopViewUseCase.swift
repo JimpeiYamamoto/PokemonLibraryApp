@@ -5,6 +5,7 @@ import Repository
 
 public protocol TopViewUseCaseType {
     func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult>
+    func saveLoadedImageData(id: Int, data: Data)
 }
 
 public final class TopViewUseCase: TopViewUseCaseType {
@@ -16,6 +17,22 @@ public final class TopViewUseCase: TopViewUseCaseType {
         self.pokemonRepository = pokemonRepository
     }
 
+    public func saveLoadedImageData(id: Int, data: Data) {
+        guard let savedPokemon = pokemonRepository.get(id: id) else { return }
+
+        pokemonRepository.set(
+            .init(
+                id: savedPokemon.id,
+                name: savedPokemon.name,
+                imageUrl: savedPokemon.imageUrl,
+                image: data,
+                weight: savedPokemon.weight,
+                abilities: savedPokemon.abilities,
+                flavorText: savedPokemon.flavorText
+            )
+        )
+    }
+
     public func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
         if pokemonRepository.get().count > offset {
             return Observable<TopViewUseCaseModel.DisplayResult>.create { [weak self] observer in
@@ -24,7 +41,7 @@ public final class TopViewUseCase: TopViewUseCaseType {
                 observer.onNext(.loaded(me.pokemonRepository.get()
                     .sorted(by: { $0.id < $1.id })
                     .map { pokemon in
-                            .init(id: pokemon.id, name: pokemon.name, imageUrl: pokemon.imageUrl, imageData: pokemon.image)
+                        .init(id: pokemon.id, name: pokemon.name, imageUrl: pokemon.imageUrl, imageData: pokemon.image)
                     }))
                 return Disposables.create()
             }

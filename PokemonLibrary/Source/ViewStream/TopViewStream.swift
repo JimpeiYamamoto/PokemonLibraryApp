@@ -13,6 +13,7 @@ public enum TopViewStreamModel {
     public struct ViewStreamInput {
         public let viewDidLoad: PublishRelay<Void> = .init()
         public let didScrollCollectionView: PublishRelay<[IndexPath]> = .init()
+        public let didLoadImage: PublishRelay<(Data, Int)> = .init()
     }
 
     public struct ViewStreamState {
@@ -36,6 +37,11 @@ public final class ViewStream: TopViewStreamType {
         let input = TopViewStreamModel.ViewStreamInput()
         let state = TopViewStreamModel.ViewStreamState()
 
+        input.didLoadImage
+            .do { (imageData, id) in
+                
+            }
+
         let displayResult = input.didScrollCollectionView.asObservable()
             .map { $0.max()?.last ?? 0 }
             .distinctUntilChanged()
@@ -56,7 +62,8 @@ public final class ViewStream: TopViewStreamType {
                             offset: offset + state.pokemonCards.value.count,
                             number: pokemon.id,
                             name: pokemon.name,
-                            imageUrl: pokemon.imageUrl
+                            imageUrl: pokemon.imageUrl,
+                            imageData: pokemon.imageData
                         )
                     }
             }
@@ -102,12 +109,14 @@ public enum TopViewStreamDataModel {
         public let number: Int
         public let name: String
         public let imageUrl: URL?
+        public let imageData: Data?
 
-        public init(offset: Int, number: Int, name: String, imageUrl: URL?) {
+        public init(offset: Int, number: Int, name: String, imageUrl: URL?, imageData: Data?) {
             self.offset = offset
             self.number = number
             self.name = name
             self.imageUrl = imageUrl
+            self.imageData = imageData
         }
     }
 }

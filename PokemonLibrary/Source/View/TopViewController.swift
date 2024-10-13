@@ -71,8 +71,10 @@ public final class TopViewController: UIViewController {
         cell?.pokemonCardView.configure(
             number: itemIdentifier.number,
             name: itemIdentifier.name,
-            imageUrl: itemIdentifier.imageUrl
+            imageUrl: itemIdentifier.imageUrl,
+            imageData: itemIdentifier.imageData
         )
+
         cell?.pokemonCardView.didTapView
             .subscribe { _ in
                 let nextVC = DetailPokemonViewController()
@@ -81,6 +83,12 @@ public final class TopViewController: UIViewController {
                 }
             }
             .disposed(by: me.disposeBag)
+
+        cell?.pokemonCardView.didLoadImage
+            .map { ($0, itemIdentifier.number) }
+            .bind(to: me.viewStream.input.didLoadImage)
+            .disposed(by: me.disposeBag)
+
         return cell
     }
 

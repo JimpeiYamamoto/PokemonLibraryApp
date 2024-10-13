@@ -5,6 +5,7 @@ import RxSwift
 
 public class PokemonCardView: UIView {
     public let didTapView = PublishRelay<Void>()
+    public let didLoadImage = PublishRelay<Data>()
     private let disposeBag = DisposeBag()
 
     public let numberLabel: UILabel = {
@@ -72,15 +73,22 @@ public class PokemonCardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func configure(number: Int, name: String, imageUrl: URL?) {
+    public func configure(number: Int, name: String, imageUrl: URL?, imageData: Data?) {
         numberLabel.text = "\(number)"
         nameLabel.text = name
+        if let imageData = imageData {
+            self.spriteImageView.image =  UIImage(data: imageData)
+            return
+        }
 
-        UIImage.loadImage(
+        UIImage.loadImageData(
             from: imageUrl
-        ) { [spriteImageView] image in
-            // TODO: ここで画像のメモリキャッシュに保存する処理を入れれば良い
-            spriteImageView.image = image
+        ) { [weak self] imageData in
+            guard let loadedImageData = imageData else {
+                return
+            }
+            self?.spriteImageView.image =  UIImage(data: loadedImageData)
+            self?.didLoadImage.accept(loadedImageData)
         }
     }
 }
