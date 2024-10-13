@@ -16,16 +16,14 @@ public final class PokemonRepository: PokemonRepositoryType {
 
     public func set(_ pokemon: Pokemon) {
         var _data = data.value
-        guard let id = pokemon.id else { return }
-        _data[id] = pokemon
+        _data[pokemon.id] = pokemon
         data.accept(_data)
     }
 
     public func set(_ pokemons: [Pokemon]) {
         var _data = data.value
         pokemons.forEach { pokemon in
-            guard let id = pokemon.id else { return }
-            _data[id] = pokemon
+            _data[pokemon.id] = pokemon
         }
         data.accept(_data)
     }

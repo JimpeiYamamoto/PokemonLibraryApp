@@ -17,7 +17,20 @@ public final class TopViewUseCase: TopViewUseCaseType {
     }
 
     public func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
-        pokemonApiGateway.getPokemonNames(offset: offset)
+        if pokemonRepository.get().count > offset {
+            return Observable<TopViewUseCaseModel.DisplayResult>.create { [weak self] observer in
+                guard let me = self else { return Disposables.create() }
+
+                observer.onNext(.loaded(me.pokemonRepository.get()
+                    .sorted(by: { $0.id < $1.id })
+                    .map { pokemon in
+                            .init(id: pokemon.id, name: pokemon.name, imageUrl: pokemon.imageUrl, imageData: pokemon.image)
+                    }))
+                return Disposables.create()
+            }
+            .startWith(.loading)
+        }
+        return pokemonApiGateway.getPokemonNames(offset: offset)
             .flatMap { [weak self] names -> Observable<[(PokemonApiGatewayModel.Species?, PokemonApiGatewayModel.Pokemon?)]> in
                 let requests = names.map { name -> Observable<(PokemonApiGatewayModel.Species?, PokemonApiGatewayModel.Pokemon?)> in
                     guard let me = self
@@ -40,15 +53,25 @@ public final class TopViewUseCase: TopViewUseCaseType {
                     return .init(
                         id: species.id,
                         name: species.name,
-                        imageUrl: imageUrl
+                        imageUrl: imageUrl,
+                        imageData: nil
                     )
                 }
             }
-//            .do { result in
-//                pokemonRepository.set(result.map {
-//                    .init()
-//                })
-//            }
+            .do { [weak self] result in
+                guard let me = self else { return }
+                me.pokemonRepository.set(result.map { pokemon in
+                    .init(
+                        id: pokemon.id,
+                        name: pokemon.name,
+                        imageUrl: pokemon.imageUrl,
+                        image: nil,
+                        weight: nil,
+                        abilities: [],
+                        flavorText: nil
+                    )
+                })
+            }
             .map { result -> TopViewUseCaseModel.DisplayResult in
                 .loaded(result)
             }
@@ -69,15 +92,13 @@ extension TopViewUseCaseModel.DisplayResult {
         public let id: Int
         public let name: String
         public let imageUrl: URL
+        public let imageData: Data?
 
-        public init(
-            id: Int,
-            name: String,
-            imageUrl: URL
-        ) {
+        public init(id: Int, name: String, imageUrl: URL, imageData: Data?) {
             self.id = id
             self.name = name
             self.imageUrl = imageUrl
+            self.imageData = imageData
         }
     }
 }

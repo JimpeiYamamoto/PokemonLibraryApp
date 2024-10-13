@@ -1,18 +1,18 @@
 import Foundation
 
 public struct Pokemon: Equatable {
-    public let id: Int?
-    public let name: String?
-    public let imageUrl: URL?
+    public let id: Int
+    public let name: String
+    public let imageUrl: URL
     public let image: Data?
     public let weight: Int?
     public let abilities: [String]
     public let flavorText: String?
 
     public init(
-        id: Int?,
-        name: String?,
-        imageUrl: URL?,
+        id: Int,
+        name: String,
+        imageUrl: URL,
         image: Data?,
         weight: Int?,
         abilities: [String],
