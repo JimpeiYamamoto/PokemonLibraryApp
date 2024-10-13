@@ -4,7 +4,6 @@ import RxCocoa
 import RxSwift
 
 public class PokemonCardView: UIView {
-    public let didTapView = PublishRelay<Void>()
     public let didLoadImage = PublishRelay<Data>()
     private let disposeBag = DisposeBag()
 
@@ -60,13 +59,6 @@ public class PokemonCardView: UIView {
             spriteImageView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
             spriteImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
-
-        let tapGesture = UITapGestureRecognizer()
-        tapGesture.rx.event
-            .map { _ in () }
-            .bind(to: didTapView)
-            .disposed(by: disposeBag)
-        addGestureRecognizer(tapGesture)
     }
 
     required init?(coder: NSCoder) {

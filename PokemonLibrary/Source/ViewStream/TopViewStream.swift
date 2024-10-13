@@ -11,9 +11,9 @@ public protocol TopViewStreamType {
 
 public enum TopViewStreamModel {
     public struct ViewStreamInput {
-        public let viewDidLoad: PublishRelay<Void> = .init()
         public let didScrollCollectionView: PublishRelay<[IndexPath]> = .init()
         public let didLoadImage: PublishRelay<(Data, Int)> = .init()
+        public let didTapItem: PublishRelay<IndexPath> = .init()
     }
 
     public struct ViewStreamState {
@@ -23,6 +23,7 @@ public enum TopViewStreamModel {
     public struct ViewStreamOutput {
         public let pokemonCards: Observable<[TopViewStreamDataModel.Item]>
         public let isLoadingViewHidden: Observable<Bool>
+        public let tappedID: Observable<Int>
     }
 }
 
@@ -36,6 +37,12 @@ public final class TopViewStream: TopViewStreamType {
     public convenience init(useCase: TopViewUseCaseType) {
         let input = TopViewStreamModel.ViewStreamInput()
         let state = TopViewStreamModel.ViewStreamState()
+
+        let tappedID = input.didTapItem
+            .map { indexPath in
+                let item = state.pokemonCards.value[indexPath.row]
+                return item.number
+            }
 
         _ = input.didLoadImage
             .subscribe { (imageData, id) in
@@ -80,7 +87,8 @@ public final class TopViewStream: TopViewStreamType {
             state: state,
             output: .init(
                 pokemonCards: state.pokemonCards.asObservable(),
-                isLoadingViewHidden: isLoadingViewHidden
+                isLoadingViewHidden: isLoadingViewHidden,
+                tappedID: tappedID
             ),
             useCase: useCase
         )

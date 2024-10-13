@@ -4,6 +4,7 @@ import RxCocoa
 import RxSwift
 
 public final class PokemonCardViewCell: UICollectionViewCell {
+    public var disposeBag = DisposeBag()
     public let pokemonCardView: PokemonCardView = {
         let view = PokemonCardView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -31,5 +32,6 @@ public final class PokemonCardViewCell: UICollectionViewCell {
         pokemonCardView.numberLabel.text = ""
         pokemonCardView.nameLabel.text = ""
         pokemonCardView.spriteImageView.image = nil
+        disposeBag = DisposeBag()
     }
 }

@@ -22,6 +22,24 @@ public final class DetailPokemonViewUseCase: DetailPokemonViewUseCaseType {
 
     public func display(id: Int) -> Observable<DetailPokemonViewUseCaseModel.DisplayResult> {
         guard let pokemon = repository.get(id: id) else { return .just(.showError) }
+
+        guard pokemon.jaAbilities.isEmpty else {
+            return .just(
+                .loaded(
+                    .init(
+                        id: pokemon.id,
+                        name: pokemon.name,
+                        weight: pokemon.weight,
+                        height: pokemon.height,
+                        flavorText: pokemon.flavorText,
+                        imageUrl: pokemon.imageUrl,
+                        imageData: pokemon.image,
+                        abilities: pokemon.jaAbilities
+                    )
+                )
+            )
+        }
+
         return Observable.zip(
             pokemon.enAbilities.map { ability -> Observable<PokemonApiGatewayModel.Ability?> in
                 apiGateway.getPokemonAbility(name: ability)

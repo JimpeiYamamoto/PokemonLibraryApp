@@ -31,11 +31,31 @@ public final class TopViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
+        viewStream.output.tappedID
+            .observe(on: MainScheduler.instance)
+            .subscribe { id in
+                let nextVC = DetailPokemonViewController(
+                    viewStream: DetailPokemonViewStream(
+                        useCase: DetailPokemonViewUseCase.shared,
+                        state: .init(selectedPokemonID: .init(value: id))
+                    )
+                )
+                self.present(nextVC, animated: true)
+            }
+            .disposed(by: disposeBag)
+
         collectionView.rx.contentOffset
             .map { [weak self] _ -> [IndexPath] in
                 self?.collectionView.indexPathsForVisibleItems ?? []
             }
             .subscribe { viewStream.input.didScrollCollectionView.accept($0) }
+            .disposed(by: disposeBag)
+
+        collectionView.rx.itemSelected
+            .debug("tap")
+            .subscribe(onNext: { indexPath in
+                viewStream.input.didTapItem.accept(indexPath)
+            })
             .disposed(by: disposeBag)
     }
     
@@ -66,35 +86,23 @@ public final class TopViewController: UIViewController {
             for: indexPath
         ) as? PokemonCardViewCell
 
-        guard let me = self else { return cell }
+        guard let me = self,
+              let _cell = cell
+        else { return cell }
 
-        cell?.pokemonCardView.configure(
+        _cell.pokemonCardView.configure(
             number: itemIdentifier.number,
             name: itemIdentifier.name,
             imageUrl: itemIdentifier.imageUrl,
             imageData: itemIdentifier.imageData
         )
 
-        cell?.pokemonCardView.didTapView
-            .subscribe { _ in
-                let nextVC = DetailPokemonViewController(
-                    viewStream: DetailPokemonViewStream(
-                        useCase: DetailPokemonViewUseCase.shared,
-                        state: .init(selectedPokemonID: .init(value: itemIdentifier.number))
-                    )
-                )
-                if me.presentedViewController == nil {
-                    me.present(nextVC, animated: true)
-                }
-            }
-            .disposed(by: me.disposeBag)
-
-        cell?.pokemonCardView.didLoadImage
+        _cell.pokemonCardView.didLoadImage
             .map { ($0, itemIdentifier.number) }
             .bind(to: me.viewStream.input.didLoadImage)
-            .disposed(by: me.disposeBag)
+            .disposed(by: _cell.disposeBag)
 
-        return cell
+        return _cell
     }
 
     private lazy var collectionViewLayout = UICollectionViewCompositionalLayout { section, environment in
