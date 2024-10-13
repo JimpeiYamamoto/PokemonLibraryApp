@@ -195,11 +195,8 @@
 		F2B213E32CA7F1B7000F78BB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F2C728C32CBBCB8B00B1EF20 /* AbilityView.swift */,
-				F2C728C12CBBCA3D00B1EF20 /* PokemonCardView.swift */,
+				F2C728C52CBBD89200B1EF20 /* Component */,
 				F2B213AA2CA7CA9C000F78BB /* TopViewController.swift */,
-				F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */,
-				F2B213F82CA9152E000F78BB /* LoadingView.swift */,
 				F2298E302CB57E350074390B /* DetailPokemonViewController.swift */,
 			);
 			path = View;
@@ -248,6 +245,17 @@
 				F2B213F62CA86F6A000F78BB /* PokemonApiGateway.swift */,
 			);
 			path = ApiGateway;
+			sourceTree = "<group>";
+		};
+		F2C728C52CBBD89200B1EF20 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				F2C728C32CBBCB8B00B1EF20 /* AbilityView.swift */,
+				F2C728C12CBBCA3D00B1EF20 /* PokemonCardView.swift */,
+				F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */,
+				F2B213F82CA9152E000F78BB /* LoadingView.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
