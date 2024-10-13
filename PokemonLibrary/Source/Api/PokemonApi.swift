@@ -88,6 +88,7 @@ public enum PokemonApiModel {
     }
 
     public struct PokemonSpecies: Decodable {
+        public let name: String?
         public let id: Int?
         public let names: [Name]?
         public let flavor_text_entries: [FlavorText]?

@@ -68,12 +68,12 @@ public final class TopViewController: UIViewController {
 
         guard let me = self else { return cell }
 
-        cell?.configure(
+        cell?.pokemonCardView.configure(
             number: itemIdentifier.number,
             name: itemIdentifier.name,
             imageUrl: itemIdentifier.imageUrl
         )
-        cell?.didTapView
+        cell?.pokemonCardView.didTapView
             .subscribe { _ in
                 let nextVC = DetailPokemonViewController()
                 if me.presentedViewController == nil {

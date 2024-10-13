@@ -24,6 +24,7 @@
 		F2B213F42CA85205000F78BB /* PokemonCardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */; };
 		F2B213F92CA9152E000F78BB /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F82CA9152E000F78BB /* LoadingView.swift */; };
 		F2C728C02CBB90C300B1EF20 /* Api in Frameworks */ = {isa = PBXBuildFile; productRef = F21B99C02CBB04C000F8729E /* Api */; };
+		F2C728C22CBBCA4100B1EF20 /* PokemonCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C728C12CBBCA3D00B1EF20 /* PokemonCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCardViewCell.swift; sourceTree = "<group>"; };
 		F2B213F62CA86F6A000F78BB /* PokemonApiGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApiGateway.swift; sourceTree = "<group>"; };
 		F2B213F82CA9152E000F78BB /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		F2C728C12CBBCA3D00B1EF20 /* PokemonCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 		F2B213E32CA7F1B7000F78BB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F2C728C12CBBCA3D00B1EF20 /* PokemonCardView.swift */,
 				F2B213AA2CA7CA9C000F78BB /* TopViewController.swift */,
 				F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */,
 				F2B213F82CA9152E000F78BB /* LoadingView.swift */,
@@ -394,6 +397,7 @@
 				F2B213F92CA9152E000F78BB /* LoadingView.swift in Sources */,
 				F2B213A92CA7CA9C000F78BB /* SceneDelegate.swift in Sources */,
 				F2B213F42CA85205000F78BB /* PokemonCardViewCell.swift in Sources */,
+				F2C728C22CBBCA4100B1EF20 /* PokemonCardView.swift in Sources */,
 				F2B213F22CA84F9D000F78BB /* UIImageExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
