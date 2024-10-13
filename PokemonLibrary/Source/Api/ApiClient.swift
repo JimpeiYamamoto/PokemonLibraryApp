@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 
 public protocol ApiClientType {
     func request<T: Decodable>(
@@ -47,3 +46,4 @@ public final class ApiClient: ApiClientType {
 extension ApiClient {
     public static let shared = ApiClient()
 }
+

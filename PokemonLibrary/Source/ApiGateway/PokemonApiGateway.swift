@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import Api
 
 public protocol PokemonApiGatewayType {
     func getPokemonNames(offset: Int) -> Observable<[String]>
@@ -8,9 +9,9 @@ public protocol PokemonApiGatewayType {
 }
 
 public final class PokemonApiGateway: PokemonApiGatewayType {
-    private let pokemonApi: PokemonApiType
+    private let pokemonApi: Api.PokemonApiType
 
-    public init(pokemonApi: PokemonApiType) {
+    public init(pokemonApi: Api.PokemonApiType) {
         self.pokemonApi = pokemonApi
     }
 

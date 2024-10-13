@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import ApiGateway
 
 public protocol TopViewUseCaseType {
     func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult>
