@@ -113,8 +113,8 @@ public final class DetailPokemonViewController: UIViewController {
                     imageUrl: info.imageUrl,
                     imageData: info.imageData
                 )
-                self?.weightLabel.text = "重さ: \(info.weight) kg"
-                self?.heightLabel.text = "高さ: \(info.height) m"
+                self?.weightLabel.text = "重さ: \(Double(info.weight)/10.0) kg"
+                self?.heightLabel.text = "高さ: \(Double(info.height)/10.0) m"
                 self?.flavorTextView.text = info.flavorText
                 info.abilities.forEach { ability in
                     let abilityView = AbilityView()
@@ -130,28 +130,6 @@ public final class DetailPokemonViewController: UIViewController {
                 viewStream.input.didLoadImage.accept(imageData)
             }
             .disposed(by: disposeBag)
-
-//        let mockData = DetailPokemonViewStreamModel.DetailInformation(
-//            id: 4,
-//            name: "フシギバナ",
-//            weight: 100,
-//            height: 3,
-//            flavorText: "ほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげ",
-//            imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")!,
-//            imageData: nil,
-//            abilities: ["ほげほげ", "ふーー", "ふがふがふが"]
-//        )
-//
-//        pokemonCardView.configure(number: mockData.id, name: mockData.name, imageUrl: mockData.imageUrl, imageData: mockData.imageData)
-//        weightLabel.text = "重さ: \(mockData.weight) kg"
-//        heightLabel.text = "高さ: \(mockData.height) m"
-//        flavorTextView.text = mockData.flavorText
-//        mockData.abilities.forEach { text in
-//            let abilityView = AbilityView()
-//            abilityView.translatesAutoresizingMaskIntoConstraints = false
-//            abilityView.configure(abilityText: "  \(text)  ")
-//            abilitiesView.addArrangedSubview(abilityView)
-//        }
     }
     
     required init?(coder: NSCoder) {
