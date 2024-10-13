@@ -31,6 +31,51 @@
           "path" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/ApiGateway"
         },
         "subpath" : "apigateway"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "domain",
+          "kind" : "fileSystem",
+          "location" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/Domain",
+          "name" : "Domain"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/Domain"
+        },
+        "subpath" : "domain"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "repository",
+          "kind" : "fileSystem",
+          "location" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/Repository",
+          "name" : "Repository"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/Repository"
+        },
+        "subpath" : "repository"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "rxswift",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/ReactiveX/RxSwift.git",
+          "name" : "RxSwift"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "c7c7d2cf50a3211fe2843f76869c698e4e417930",
+            "version" : "6.8.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "RxSwift"
       }
     ]
   },

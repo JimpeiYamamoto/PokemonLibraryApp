@@ -2,25 +2,24 @@
 import PackageDescription
 
 let package = Package(
-    name: "ViewStream",
+    name: "Repository",
     products: [
         .library(
-            name: "ViewStream",
-            targets: ["ViewStream"]
+            name: "Repository",
+            targets: ["Repository"]
         ),
     ],
     dependencies: [
-        .package(name: "UseCase", path: "./../UseCase"),
+        .package(name: "Domain", path: "./../Domain"),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.0.0"))
     ],
     targets: [
         .target(
-            name: "ViewStream",
+            name: "Repository",
             dependencies: [
-                .product(name: "UseCase", package: "UseCase"),
+                .product(name: "Domain", package: "Domain"),
                 .product(name: "RxSwift", package: "RxSwift"),
-                .product(name: "RxRelay", package: "RxSwift"),
-                .product(name: "RxCocoa", package: "RxSwift")
+                .product(name: "RxRelay", package: "RxSwift")
             ],
             path: "./"
         )

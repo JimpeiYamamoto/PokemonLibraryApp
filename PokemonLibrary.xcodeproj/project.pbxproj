@@ -73,6 +73,10 @@
 		F2B213F82CA9152E000F78BB /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		F2C728C12CBBCA3D00B1EF20 /* PokemonCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCardView.swift; sourceTree = "<group>"; };
 		F2C728C32CBBCB8B00B1EF20 /* AbilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityView.swift; sourceTree = "<group>"; };
+		F2C728C82CBBDA5E00B1EF20 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		F2C728CA2CBBDDE700B1EF20 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		F2D1D6472CBBDE39003EBB56 /* PokemonRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonRepository.swift; sourceTree = "<group>"; };
+		F2D1D6482CBBDE8F003EBB56 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,8 +187,10 @@
 			isa = PBXGroup;
 			children = (
 				F2B213E62CA7F1D3000F78BB /* Utils */,
+				F2C728C72CBBD98D00B1EF20 /* Domain */,
 				F2B213E52CA7F1CC000F78BB /* Api */,
 				F2B213F52CA86F52000F78BB /* ApiGateway */,
+				F2C728C62CBBD97F00B1EF20 /* Repository */,
 				F2B213EB2CA8077F000F78BB /* UseCase */,
 				F2B213EE2CA80839000F78BB /* ViewStream */,
 				F2B213E32CA7F1B7000F78BB /* View */,
@@ -256,6 +262,24 @@
 				F2B213F82CA9152E000F78BB /* LoadingView.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		F2C728C62CBBD97F00B1EF20 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				F2D1D6482CBBDE8F003EBB56 /* Package.swift */,
+				F2D1D6472CBBDE39003EBB56 /* PokemonRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		F2C728C72CBBD98D00B1EF20 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				F2C728CA2CBBDDE700B1EF20 /* Package.swift */,
+				F2C728C82CBBDA5E00B1EF20 /* Pokemon.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,6 +383,8 @@
 				F21B99CC2CBB8B2D00F8729E /* XCLocalSwiftPackageReference "PokemonLibrary/Source/ApiGateway" */,
 				F21B99D02CBB8BF600F8729E /* XCLocalSwiftPackageReference "PokemonLibrary/Source/UseCase" */,
 				F21B99D52CBB8D2000F8729E /* XCLocalSwiftPackageReference "PokemonLibrary/Source/ViewStream" */,
+				F2C728C92CBBDDD700B1EF20 /* XCLocalSwiftPackageReference "PokemonLibrary/Source/Domain" */,
+				F2D1D6492CBBDEA5003EBB56 /* XCLocalSwiftPackageReference "PokemonLibrary/Source/Repository" */,
 			);
 			productRefGroup = F2B213A42CA7CA9C000F78BB /* Products */;
 			projectDirPath = "";
@@ -760,6 +786,14 @@
 		F21B99D52CBB8D2000F8729E /* XCLocalSwiftPackageReference "PokemonLibrary/Source/ViewStream" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = PokemonLibrary/Source/ViewStream;
+		};
+		F2C728C92CBBDDD700B1EF20 /* XCLocalSwiftPackageReference "PokemonLibrary/Source/Domain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = PokemonLibrary/Source/Domain;
+		};
+		F2D1D6492CBBDEA5003EBB56 /* XCLocalSwiftPackageReference "PokemonLibrary/Source/Repository" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = PokemonLibrary/Source/Repository;
 		};
 /* End XCLocalSwiftPackageReference section */
 

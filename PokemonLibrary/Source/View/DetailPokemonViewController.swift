@@ -82,25 +82,11 @@ public final class DetailPokemonViewController: UIViewController {
         return view
     }()
 
-    private let voiceButtonView: UIButton = {
-        let view = UIButton()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setImage(UIImage(systemName: "megaphone"), for: .normal)
-        view.tintColor = .black
-
-        return view
-    }()
-
     public init() {
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .white
 
         view.addSubview(containerView)
-        view.addSubview(voiceButtonView)
-        NSLayoutConstraint.activate([
-            voiceButtonView.topAnchor.constraint(equalTo: pokemonCardView.topAnchor, constant: 4),
-            voiceButtonView.rightAnchor.constraint(equalTo: pokemonCardView.rightAnchor, constant: -4),
-        ])
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 48),
             containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),

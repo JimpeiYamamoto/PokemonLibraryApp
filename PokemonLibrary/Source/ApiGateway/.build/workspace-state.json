@@ -17,6 +17,23 @@
           "path" : "/Users/s20810/workspace/study/PokemonLibraryApp/PokemonLibrary/Source/Api"
         },
         "subpath" : "api"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "rxswift",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/ReactiveX/RxSwift.git",
+          "name" : "RxSwift"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "c7c7d2cf50a3211fe2843f76869c698e4e417930",
+            "version" : "6.8.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "RxSwift"
       }
     ]
   },

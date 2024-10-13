@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import ApiGateway
+import Repository
 
 public protocol TopViewUseCaseType {
     func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult>
@@ -8,10 +9,11 @@ public protocol TopViewUseCaseType {
 
 public final class TopViewUseCase: TopViewUseCaseType {
     private let pokemonApiGateway: PokemonApiGatewayType
-    private let disposeBag = DisposeBag()
+    private let pokemonRepository: PokemonRepositoryType
 
-    public init(pokemonApiGateway: PokemonApiGatewayType) {
+    public init(pokemonApiGateway: PokemonApiGatewayType, pokemonRepository: PokemonRepositoryType) {
         self.pokemonApiGateway = pokemonApiGateway
+        self.pokemonRepository = pokemonRepository
     }
 
     public func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult> {
@@ -42,6 +44,11 @@ public final class TopViewUseCase: TopViewUseCaseType {
                     )
                 }
             }
+//            .do { result in
+//                pokemonRepository.set(result.map {
+//                    .init()
+//                })
+//            }
             .map { result -> TopViewUseCaseModel.DisplayResult in
                 .loaded(result)
             }
@@ -76,5 +83,8 @@ extension TopViewUseCaseModel.DisplayResult {
 }
 
 extension TopViewUseCase {
-    public static let shared = TopViewUseCase(pokemonApiGateway: PokemonApiGateway.shared)
+    public static let shared = TopViewUseCase(
+        pokemonApiGateway: PokemonApiGateway.shared,
+        pokemonRepository: PokemonRepository.shared
+    )
 }

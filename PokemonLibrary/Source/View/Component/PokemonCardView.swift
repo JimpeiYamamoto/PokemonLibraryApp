@@ -79,6 +79,7 @@ public class PokemonCardView: UIView {
         UIImage.loadImage(
             from: imageUrl
         ) { [spriteImageView] image in
+            // TODO: ここで画像のメモリキャッシュに保存する処理を入れれば良い
             spriteImageView.image = image
         }
     }
