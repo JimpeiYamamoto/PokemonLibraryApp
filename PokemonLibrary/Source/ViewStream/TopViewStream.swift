@@ -38,8 +38,8 @@ public final class ViewStream: TopViewStreamType {
         let state = TopViewStreamModel.ViewStreamState()
 
         input.didLoadImage
-            .do { (imageData, id) in
-                
+            .subscribe { (imageData, id) in
+                useCase.setLoadedImageData(id: id, data: imageData)
             }
 
         let displayResult = input.didScrollCollectionView.asObservable()

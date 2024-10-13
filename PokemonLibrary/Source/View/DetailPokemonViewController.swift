@@ -123,7 +123,7 @@ public final class DetailPokemonViewController: UIViewController {
             abilities: ["ほげほげ", "ふーー", "ふがふがふが"]
         )
 
-        pokemonCardView.configure(number: mockData.id, name: mockData.name, imageUrl: mockData.image)
+        pokemonCardView.configure(number: mockData.id, name: mockData.name, imageUrl: mockData.image, imageData: nil)
         weightLabel.text = "重さ: \(mockData.weight) kg"
         heightLabel.text = "高さ: \(mockData.height) m"
         flavorTextView.text = mockData.flavorText

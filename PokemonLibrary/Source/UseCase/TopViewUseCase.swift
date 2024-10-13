@@ -5,7 +5,7 @@ import Repository
 
 public protocol TopViewUseCaseType {
     func display(offset: Int) -> Observable<TopViewUseCaseModel.DisplayResult>
-    func saveLoadedImageData(id: Int, data: Data)
+    func setLoadedImageData(id: Int, data: Data)
 }
 
 public final class TopViewUseCase: TopViewUseCaseType {
@@ -17,7 +17,7 @@ public final class TopViewUseCase: TopViewUseCaseType {
         self.pokemonRepository = pokemonRepository
     }
 
-    public func saveLoadedImageData(id: Int, data: Data) {
+    public func setLoadedImageData(id: Int, data: Data) {
         guard let savedPokemon = pokemonRepository.get(id: id) else { return }
 
         pokemonRepository.set(
