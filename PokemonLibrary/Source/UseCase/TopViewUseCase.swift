@@ -28,7 +28,8 @@ public final class TopViewUseCase: TopViewUseCaseType {
                 image: data,
                 weight: savedPokemon.weight,
                 height: savedPokemon.height,
-                abilities: savedPokemon.abilities,
+                enAbilities: savedPokemon.enAbilities,
+                jaAbilities: savedPokemon.jaAbilities,
                 flavorText: savedPokemon.flavorText
             )
         )
@@ -51,7 +52,8 @@ public final class TopViewUseCase: TopViewUseCaseType {
                                     imageData: pokemon.image,
                                     weight: pokemon.weight,
                                     height: pokemon.height,
-                                    abilities: pokemon.abilities
+                                    enAbilities: pokemon.enAbilities,
+                                    flavorText: pokemon.flavorText
                                 )
                             }
                     )
@@ -87,7 +89,8 @@ public final class TopViewUseCase: TopViewUseCaseType {
                         imageData: nil,
                         weight: pokemon.weight,
                         height: pokemon.height,
-                        abilities: pokemon.abilities
+                        enAbilities: pokemon.abilities,
+                        flavorText: species.flavorText
                     )
                 }
             }
@@ -101,8 +104,9 @@ public final class TopViewUseCase: TopViewUseCaseType {
                         image: nil,
                         weight: pokemon.weight,
                         height: pokemon.height,
-                        abilities: pokemon.abilities,
-                        flavorText: nil
+                        enAbilities: pokemon.enAbilities,
+                        jaAbilities: [],
+                        flavorText: pokemon.flavorText
                     )
                 })
             }
@@ -129,7 +133,8 @@ extension TopViewUseCaseModel.DisplayResult {
         public let imageData: Data?
         public let weight: Int
         public let height: Int
-        public let abilities: [String]
+        public let enAbilities: [String]
+        public let flavorText: String
 
         public init(
             id: Int,
@@ -138,7 +143,8 @@ extension TopViewUseCaseModel.DisplayResult {
             imageData: Data?,
             weight: Int,
             height: Int,
-            abilities: [String]
+            enAbilities: [String],
+            flavorText: String
         ) {
             self.id = id
             self.name = name
@@ -146,7 +152,8 @@ extension TopViewUseCaseModel.DisplayResult {
             self.imageData = imageData
             self.weight = weight
             self.height = height
-            self.abilities = abilities
+            self.enAbilities = enAbilities
+            self.flavorText = flavorText
         }
     }
 }

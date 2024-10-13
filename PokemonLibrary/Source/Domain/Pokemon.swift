@@ -7,8 +7,9 @@ public struct Pokemon: Equatable {
     public let image: Data?
     public let weight: Int
     public let height: Int
-    public let abilities: [String]
-    public let flavorText: String?
+    public let enAbilities: [String]
+    public let jaAbilities: [String]
+    public let flavorText: String
 
     public init(
         id: Int,
@@ -17,8 +18,9 @@ public struct Pokemon: Equatable {
         image: Data?,
         weight: Int,
         height: Int,
-        abilities: [String],
-        flavorText: String?
+        enAbilities: [String],
+        jaAbilities: [String],
+        flavorText: String
     ) {
         self.id = id
         self.name = name
@@ -26,7 +28,8 @@ public struct Pokemon: Equatable {
         self.image = image
         self.weight = weight
         self.height = height
-        self.abilities = abilities
+        self.enAbilities = enAbilities
+        self.jaAbilities = jaAbilities
         self.flavorText = flavorText
     }
 }

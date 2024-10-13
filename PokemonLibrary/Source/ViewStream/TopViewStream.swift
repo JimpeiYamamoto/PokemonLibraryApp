@@ -26,7 +26,7 @@ public enum TopViewStreamModel {
     }
 }
 
-public final class ViewStream: TopViewStreamType {
+public final class TopViewStream: TopViewStreamType {
     public let input: TopViewStreamModel.ViewStreamInput
     public let state: TopViewStreamModel.ViewStreamState
     public let output: TopViewStreamModel.ViewStreamOutput
@@ -37,7 +37,7 @@ public final class ViewStream: TopViewStreamType {
         let input = TopViewStreamModel.ViewStreamInput()
         let state = TopViewStreamModel.ViewStreamState()
 
-        input.didLoadImage
+        _ = input.didLoadImage
             .subscribe { (imageData, id) in
                 useCase.setLoadedImageData(id: id, data: imageData)
             }

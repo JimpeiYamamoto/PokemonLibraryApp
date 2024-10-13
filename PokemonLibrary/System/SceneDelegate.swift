@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // window生成
         let window = UIWindow(windowScene: scene)
         // ルートビュー指定
-        window.rootViewController = TopViewController(viewStream: ViewStream(useCase: TopViewUseCase.shared))
+        window.rootViewController = TopViewController(viewStream: TopViewStream(useCase: TopViewUseCase.shared))
         // キーウインドウ指定
         window.makeKeyAndVisible()
         // windowインスタンスが解放されないようにパラメータに代入する

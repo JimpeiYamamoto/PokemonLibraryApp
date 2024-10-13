@@ -6,10 +6,10 @@ import ViewStream
 
 public final class TopViewController: UIViewController {
 
-    let viewStream: ViewStream
+    let viewStream: TopViewStreamType
     let disposeBag = DisposeBag()
 
-    public init(viewStream: ViewStream) {
+    public init(viewStream: TopViewStreamType) {
         self.viewStream = viewStream
         super.init(nibName: nil, bundle: nil)
 
@@ -77,7 +77,12 @@ public final class TopViewController: UIViewController {
 
         cell?.pokemonCardView.didTapView
             .subscribe { _ in
-                let nextVC = DetailPokemonViewController()
+                let nextVC = DetailPokemonViewController(
+                    viewStream: DetailPokemonViewStream(
+                        useCase: DetailPokemonViewUseCase.shared,
+                        state: .init(selectedPokemonID: .init(value: itemIdentifier.number))
+                    )
+                )
                 if me.presentedViewController == nil {
                     me.present(nextVC, animated: true)
                 }

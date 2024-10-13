@@ -1,8 +1,14 @@
 import Foundation
 import UIKit
 import ViewStream
+import RxSwift
+import RxCocoa
+import RxRelay
 
 public final class DetailPokemonViewController: UIViewController {
+
+    private let viewStream: DetailPokemonViewStreamType
+    private let disposeBag = DisposeBag()
 
     private lazy var containerView: UIStackView = {
         let emptyView = UIView()
@@ -83,10 +89,80 @@ public final class DetailPokemonViewController: UIViewController {
         return view
     }()
 
-    public init() {
-        super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .white
+    private let loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
+    public init(viewStream: DetailPokemonViewStreamType) {
+        self.viewStream = viewStream
+        super.init(nibName: nil, bundle: nil)
+
+        viewStream.output.isLoadingViewHidden
+            .observe(on: MainScheduler.instance)
+            .bind(to: loadingView.rx.isHidden)
+            .disposed(by: disposeBag)
+
+        viewStream.output.detailInformation
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] info in
+                self?.pokemonCardView.configure(
+                    number: info.id,
+                    name: info.name,
+                    imageUrl: info.imageUrl,
+                    imageData: info.imageData
+                )
+                self?.weightLabel.text = "重さ: \(info.weight) kg"
+                self?.heightLabel.text = "高さ: \(info.height) m"
+                self?.flavorTextView.text = info.flavorText
+                info.abilities.forEach { ability in
+                    let abilityView = AbilityView()
+                    abilityView.translatesAutoresizingMaskIntoConstraints = false
+                    abilityView.configure(abilityText: "  \(ability)  ")
+                    self?.abilitiesView.addArrangedSubview(abilityView)
+                }
+            }
+            .disposed(by: disposeBag)
+
+        pokemonCardView.didLoadImage
+            .subscribe { imageData in
+                viewStream.input.didLoadImage.accept(imageData)
+            }
+            .disposed(by: disposeBag)
+
+//        let mockData = DetailPokemonViewStreamModel.DetailInformation(
+//            id: 4,
+//            name: "フシギバナ",
+//            weight: 100,
+//            height: 3,
+//            flavorText: "ほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげ",
+//            imageUrl: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")!,
+//            imageData: nil,
+//            abilities: ["ほげほげ", "ふーー", "ふがふがふが"]
+//        )
+//
+//        pokemonCardView.configure(number: mockData.id, name: mockData.name, imageUrl: mockData.imageUrl, imageData: mockData.imageData)
+//        weightLabel.text = "重さ: \(mockData.weight) kg"
+//        heightLabel.text = "高さ: \(mockData.height) m"
+//        flavorTextView.text = mockData.flavorText
+//        mockData.abilities.forEach { text in
+//            let abilityView = AbilityView()
+//            abilityView.translatesAutoresizingMaskIntoConstraints = false
+//            abilityView.configure(abilityText: "  \(text)  ")
+//            abilitiesView.addArrangedSubview(abilityView)
+//        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        viewStream.input.viewDidLoad.accept(())
+
+        view.backgroundColor = .white
         view.addSubview(containerView)
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 48),
@@ -113,34 +189,12 @@ public final class DetailPokemonViewController: UIViewController {
             abilitiesView.heightAnchor.constraint(equalToConstant: 35)
         ])
 
-        let mockData = DetailPokemonViewStreamModel.DetailInformation(
-            id: 4,
-            name: "フシギバナ",
-            weight: 100,
-            height: 3,
-            flavorText: "ほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげほげほgへおhげおほげ",
-            image: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")!,
-            sound: URL(string: "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/1.ogg")!,
-            abilities: ["ほげほげ", "ふーー", "ふがふがふが"]
-        )
-
-        pokemonCardView.configure(number: mockData.id, name: mockData.name, imageUrl: mockData.image, imageData: nil)
-        weightLabel.text = "重さ: \(mockData.weight) kg"
-        heightLabel.text = "高さ: \(mockData.height) m"
-        flavorTextView.text = mockData.flavorText
-        mockData.abilities.forEach { text in
-            let abilityView = AbilityView()
-            abilityView.translatesAutoresizingMaskIntoConstraints = false
-            abilityView.configure(abilityText: "  \(text)  ")
-            abilitiesView.addArrangedSubview(abilityView)
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    public override func viewDidLoad() {
-        super.viewDidLoad()
+        view.addSubview(loadingView)
+        NSLayoutConstraint.activate([
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 100),
+            loadingView.widthAnchor.constraint(equalToConstant: 100),
+        ])
     }
 }
