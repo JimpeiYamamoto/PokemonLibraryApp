@@ -6,7 +6,7 @@ public final class DetailPokemonViewController: UIViewController {
     private lazy var containerView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [headerPokemonView, flavorTextView, UIView()])
         view.axis = .vertical
-        view.spacing = 8.0
+        view.spacing = 16.0
         view.alignment = .center
         view.translatesAutoresizingMaskIntoConstraints = false
         view.distribution = .fill
@@ -36,13 +36,13 @@ public final class DetailPokemonViewController: UIViewController {
         let descriptionView = UIStackView(arrangedSubviews: [weightLabel, heightLabel, footerAbilityView])
         descriptionView.translatesAutoresizingMaskIntoConstraints = false
         descriptionView.axis = .vertical
-        descriptionView.spacing = 16.0
-        descriptionView.alignment = .leading
+        descriptionView.spacing = 12.0
+        descriptionView.alignment = .center
 
         let containerView = UIStackView(arrangedSubviews: [pokemonCardView, descriptionView])
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.axis = .horizontal
-        containerView.spacing = 24.0
+        containerView.spacing = 8.0
         containerView.alignment = .center
         return containerView
     }()
@@ -57,7 +57,7 @@ public final class DetailPokemonViewController: UIViewController {
     private let footerAbilityView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 16.0
+        view.spacing = 8.0
         view.alignment = .center
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -69,7 +69,7 @@ public final class DetailPokemonViewController: UIViewController {
 
         view.addSubview(containerView)
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 48),
             containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             containerView.rightAnchor.constraint(equalTo: view.rightAnchor),
             containerView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -87,8 +87,8 @@ public final class DetailPokemonViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            flavorTextView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 16),
-            flavorTextView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -16),
+            flavorTextView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 24),
+            flavorTextView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -24),
         ])
 
         let mockData = DetailPokemonViewDataModel.detailInformation(
@@ -103,16 +103,13 @@ public final class DetailPokemonViewController: UIViewController {
         )
 
         pokemonCardView.configure(number: mockData.id, name: mockData.name, imageUrl: mockData.image)
-        weightLabel.text = "  重さ: \(mockData.weight) kg"
-        heightLabel.text = "  高さ: \(mockData.height) m"
+        weightLabel.text = "重さ: \(mockData.weight) kg"
+        heightLabel.text = "高さ: \(mockData.height) m"
         flavorTextView.text = mockData.flavorText
         mockData.abilities.forEach { text in
-            let abilityView: UILabel = {
-                let view = UILabel()
-                view.translatesAutoresizingMaskIntoConstraints = false
-                view.text = text
-                return view
-            }()
+            let abilityView = AbilityView()
+            abilityView.translatesAutoresizingMaskIntoConstraints = false
+            abilityView.configure(abilityText: "  \(text)  ")
             footerAbilityView.addArrangedSubview(abilityView)
         }
     }
