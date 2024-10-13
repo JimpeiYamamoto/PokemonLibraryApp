@@ -14,7 +14,7 @@ public final class DetailPokemonViewController: UIViewController {
         )
         view.axis = .vertical
         view.spacing = 12.0
-        view.alignment = .center
+        view.alignment = .leading
         view.translatesAutoresizingMaskIntoConstraints = false
         view.distribution = .equalSpacing
         return view
