@@ -77,18 +77,20 @@ public enum PokemonApiModel {
         }
     }
 
-    public struct PokemonSpecies: Decodable {
-        public let id: Int?
-        public let names: [Name]
-        public let flavor_text_entries: [FlavorText]
-    }
-
     public struct Pokemon: Decodable {
         public let id: Int?
         public let height: Int?
         public let weight: Int?
         public let sprites: PokemonSprites
         public let cries: PokemonCries
+        public let abilities: [PokemonAbility]
+        public let species: PokemonSpecies
+    }
+
+    public struct PokemonSpecies: Decodable {
+        public let id: Int?
+        public let names: [Name]?
+        public let flavor_text_entries: [FlavorText]?
     }
 
     public struct PokemonCries: Decodable {
@@ -99,6 +101,24 @@ public enum PokemonApiModel {
     public struct PokemonSprites: Decodable {
         public let front_default: String?
         public let back_default: String?
+    }
+
+    public struct PokemonAbility: Decodable {
+        public let is_hidden: Bool?
+        public let slot: Int?
+        public let ability: Ability?
+    }
+
+    public struct Ability: Decodable {
+        public let id: Int?
+        public let name: String?
+        public let names: [Name]?
+        public let flavor_text_entries: [AbilityFlavorText]?
+    }
+
+    public struct AbilityFlavorText: Decodable {
+        public let flavor_text: String?
+        public let language: Language?
     }
 
     public struct Name: Decodable {

@@ -23,6 +23,7 @@
 		F2B213F22CA84F9D000F78BB /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F12CA84F9D000F78BB /* UIImageExtension.swift */; };
 		F2B213F42CA85205000F78BB /* PokemonCardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F32CA85205000F78BB /* PokemonCardViewCell.swift */; };
 		F2B213F92CA9152E000F78BB /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B213F82CA9152E000F78BB /* LoadingView.swift */; };
+		F2C728C02CBB90C300B1EF20 /* Api in Frameworks */ = {isa = PBXBuildFile; productRef = F21B99C02CBB04C000F8729E /* Api */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2C728C02CBB90C300B1EF20 /* Api in Frameworks */,
 				F2B213DC2CA7CB2E000F78BB /* RxSwift in Frameworks */,
 				F21B99D92CBB8F8900F8729E /* ViewStream in Frameworks */,
 				F2B213DA2CA7CB2E000F78BB /* RxRelay in Frameworks */,

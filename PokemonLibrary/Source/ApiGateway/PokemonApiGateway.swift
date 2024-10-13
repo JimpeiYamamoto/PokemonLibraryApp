@@ -36,8 +36,8 @@ public final class PokemonApiGateway: PokemonApiGatewayType {
                 name: name,
                 onSuccess: { response in
                     guard let id = response.id,
-                          let name = response.names.filter({ $0.language.name == "ja" }).first?.name,
-                          let flavorText = response.flavor_text_entries.filter({ $0.language.name == "ja" }).first?.flavor_text
+                          let name = response.names?.filter({ $0.language.name == "ja" }).first?.name,
+                          let flavorText = response.flavor_text_entries?.filter({ $0.language.name == "ja" }).first?.flavor_text
                     else {
                         observer.onNext(nil)
                         return
