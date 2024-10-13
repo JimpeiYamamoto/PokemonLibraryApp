@@ -52,7 +52,6 @@ public final class TopViewController: UIViewController {
             .disposed(by: disposeBag)
 
         collectionView.rx.itemSelected
-            .debug("tap")
             .subscribe(onNext: { indexPath in
                 viewStream.input.didTapItem.accept(indexPath)
             })
