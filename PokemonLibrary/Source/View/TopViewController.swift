@@ -40,6 +40,7 @@ public final class TopViewController: UIViewController {
                         state: .init(selectedPokemonID: .init(value: id))
                     )
                 )
+                nextVC.modalPresentationStyle = .fullScreen
                 self.present(nextVC, animated: true)
             }
             .disposed(by: disposeBag)

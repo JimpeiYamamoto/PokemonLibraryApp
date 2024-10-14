@@ -95,6 +95,12 @@ public final class DetailPokemonViewController: UIViewController {
         return view
     }()
 
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .close)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     public init(viewStream: DetailPokemonViewStreamType) {
         self.viewStream = viewStream
         super.init(nibName: nil, bundle: nil)
@@ -128,6 +134,12 @@ public final class DetailPokemonViewController: UIViewController {
         pokemonCardView.didLoadImage
             .subscribe { imageData in
                 viewStream.input.didLoadImage.accept(imageData)
+            }
+            .disposed(by: disposeBag)
+
+        closeButton.rx.controlEvent(.touchUpInside)
+            .subscribe { _ in
+                self.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -173,6 +185,14 @@ public final class DetailPokemonViewController: UIViewController {
             loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             loadingView.heightAnchor.constraint(equalToConstant: 100),
             loadingView.widthAnchor.constraint(equalToConstant: 100),
+        ])
+
+        view.addSubview(closeButton)
+        NSLayoutConstraint.activate([
+            closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            closeButton.widthAnchor.constraint(equalToConstant: 50),
+            closeButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
 }
