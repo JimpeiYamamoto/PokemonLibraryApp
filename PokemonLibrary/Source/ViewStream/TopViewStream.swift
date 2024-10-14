@@ -33,8 +33,9 @@ public final class TopViewStream: TopViewStreamType {
     public let output: TopViewStreamModel.ViewStreamOutput
 
     private let useCase: TopViewUseCaseType
+    private let disposeBag = DisposeBag()
 
-    public convenience init(useCase: TopViewUseCaseType) {
+    public init(useCase: TopViewUseCaseType) {
         let input = TopViewStreamModel.ViewStreamInput()
         let state = TopViewStreamModel.ViewStreamState()
 
@@ -44,10 +45,11 @@ public final class TopViewStream: TopViewStreamType {
                 return item.number
             }
 
-        _ = input.didLoadImage
+        input.didLoadImage
             .subscribe { (imageData, id) in
                 useCase.setLoadedImageData(id: id, data: imageData)
             }
+            .disposed(by: disposeBag)
 
         let displayResult = input.didScrollCollectionView.asObservable()
             .map { $0.max()?.last ?? 0 }
@@ -59,7 +61,7 @@ public final class TopViewStream: TopViewStreamType {
             }
             .share()
 
-        _ = displayResult
+        displayResult
             .map { displayResult -> [TopViewStreamDataModel.Item] in
                 guard case let .loaded(pokemons) = displayResult else { return [] }
                 return pokemons
@@ -78,32 +80,19 @@ public final class TopViewStream: TopViewStreamType {
                 state.pokemonCards.value + items
             }
             .bind(to: state.pokemonCards)
+            .disposed(by: disposeBag)
 
         let isLoadingViewHidden = displayResult
             .map { $0 != .loading }
 
-        self.init(
-            input: input,
-            state: state,
-            output: .init(
-                pokemonCards: state.pokemonCards.asObservable(),
-                isLoadingViewHidden: isLoadingViewHidden,
-                tappedID: tappedID
-            ),
-            useCase: useCase
-        )
-    }
-
-    public init(
-        input: TopViewStreamModel.ViewStreamInput,
-        state: TopViewStreamModel.ViewStreamState,
-        output: TopViewStreamModel.ViewStreamOutput,
-        useCase: TopViewUseCaseType
-    ) {
+        self.useCase = useCase
         self.input = input
         self.state = state
-        self.output = output
-        self.useCase = useCase
+        self.output = .init(
+            pokemonCards: state.pokemonCards.asObservable(),
+            isLoadingViewHidden: isLoadingViewHidden,
+            tappedID: tappedID
+        )
     }
 }
 

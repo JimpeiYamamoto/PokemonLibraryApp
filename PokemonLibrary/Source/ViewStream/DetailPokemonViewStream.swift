@@ -32,16 +32,20 @@ public final class DetailPokemonViewStream: DetailPokemonViewStreamType {
     
     private let useCase: DetailPokemonViewUseCaseType
 
-    public convenience init(
+    private let disposeBag = DisposeBag()
+
+    public init(
         useCase: DetailPokemonViewUseCaseType,
         state: DetailPokemonViewStreamModel.ViewStreamState
     ) {
         let input = DetailPokemonViewStreamModel.ViewStreamInput()
+        let state = state
 
-        _ = input.didLoadImage
+        input.didLoadImage
             .subscribe { imageData in
                 useCase.setLoadedImageData(id: state.selectedPokemonID.value, data: imageData)
             }
+            .disposed(by: disposeBag)
 
         let displayResult = input.viewDidLoad
             .flatMap { () -> Observable<DetailPokemonViewUseCaseModel.DisplayResult> in
@@ -67,27 +71,13 @@ public final class DetailPokemonViewStream: DetailPokemonViewStreamType {
                 )
             }
 
-        self.init(
-            input: input,
-            state: state,
-            output: .init(
-                detailInformation: detailInformation,
-                isLoadingViewHidden: isLoadingViewHidden
-            ),
-            useCase: useCase
-        )
-    }
-
-    public init(
-        input: DetailPokemonViewStreamModel.ViewStreamInput,
-        state: DetailPokemonViewStreamModel.ViewStreamState,
-        output: DetailPokemonViewStreamModel.ViewStreamOutput,
-        useCase: DetailPokemonViewUseCaseType
-    ) {
+        self.useCase = useCase
         self.input = input
         self.state = state
-        self.output = output
-        self.useCase = useCase
+        self.output = .init(
+            detailInformation: detailInformation,
+            isLoadingViewHidden: isLoadingViewHidden
+        )
     }
 }
 
