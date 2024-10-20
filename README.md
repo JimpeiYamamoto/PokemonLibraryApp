@@ -20,3 +20,4 @@ https://github.com/user-attachments/assets/33201d1b-2738-41d2-a1be-72960d016f1c
 
 ## Architecture
 This app adopts Clean Architecture, clearly separating the UI, business logic, and data management layers.
+<img width="1391" alt="image" src="https://github.com/user-attachments/assets/c22580a6-45bb-45c5-bd84-ac94db321f8e">
