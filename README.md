@@ -9,6 +9,7 @@ This application is an iOS app that displays a list of Pokémon using the PokeAP
 - Utilizes UIKit and RxSwift: For smooth asynchronous operations and UI updates.
 - Clean Architecture: Offers excellent extendability and maintainability.
 - Paging Feature: Automatically loads the data of the next Pokémon as the user scrolls.
+- Modular Architecture with Swift Package Manager: The project adopts a modular architecture approach, separating concerns into distinct layers, each packaged as a local Swift Package. This enhances the scalability, manageability, and reusability of the code.
 
 ## Tech Stack
 - iOS (UIKit)
