@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  PokemonLibrary
-//
-//  Created by 山本 迅平 on 9/28/24.
-//
-
 import UIKit
 
 @main
