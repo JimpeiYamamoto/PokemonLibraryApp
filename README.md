@@ -3,7 +3,9 @@
 This application is an iOS app that displays a list of Pokémon using the PokeAPI. It allows users to easily browse through each Pokémon's splash image, name, and number via a collection view.
 
 ## Features
-- Pokémon Listing: Includes splash images, names, and numbers.
+- **Pokémon Listing**: Includes splash images, names, and numbers.
+- **Detail View Navigation**: Each Pokémon's View can be tapped to transition to a detailed page, providing more specific information about the selected Pokémon.
+- **Memory Caching with Repository**: Implements memory caching functionality using a repository pattern, which helps to temporarily store fetched data for quick retrieval and enhances the user experience by reducing load times.
 - Utilizes UIKit and RxSwift: For smooth asynchronous operations and UI updates.
 - Clean Architecture: Offers excellent extendability and maintainability.
 - Paging Feature: Automatically loads the data of the next Pokémon as the user scrolls.
