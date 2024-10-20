@@ -16,7 +16,11 @@ This application is an iOS app that displays a list of Pokémon using the PokeAP
 This app uses PokeAPI as its data source. [PokeAPI](https://pokeapi.co/docs/v2) is a RESTful API that provides a comprehensive set of Pokémon data.
 
 ## Demo
-https://github.com/user-attachments/assets/33201d1b-2738-41d2-a1be-72960d016f1c
+### Collection & Paging
+https://github.com/user-attachments/assets/edddaf97-cb21-471b-ac78-62a46b1c930b
+
+### DetailView
+https://github.com/user-attachments/assets/0b1b0543-6f24-41fd-a8a9-a96bb2f8c875
 
 ## Architecture
 This app adopts Clean Architecture, clearly separating the UI, business logic, and data management layers.
